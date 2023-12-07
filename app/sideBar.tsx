@@ -8,10 +8,8 @@ import {
   FaProjectDiagram,
   FaTasks,
   FaCalendarAlt,
-  FaUser,
   FaUsers,
 } from "react-icons/fa";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import classnames from "classnames";
 import { usePathname } from "next/navigation";
 
@@ -21,7 +19,7 @@ const Sidebar = () => {
 
   const links = [
     { label: "Dashboard", href: "/", icon: <FaDesktop /> },
-    { label: "Barang", href: "/barang", icon: <FaProjectDiagram /> },
+    { label: "Barang", href: "/products", icon: <FaProjectDiagram /> },
     { label: "Sewa", href: "/sewa", icon: <FaTasks /> },
     { label: "Event", href: "/events", icon: <FaCalendarAlt /> },
     { label: "Daftar Anggota", href: "/anggota", icon: <FaUsers /> },
