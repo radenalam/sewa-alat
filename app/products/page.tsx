@@ -107,10 +107,10 @@ const productPage = () => {
           {product.map((product, i) => (
             <Table.Row key={i}>
               <Table.RowHeaderCell>
-                <Link href={`/product/${product.id}`}>{product.id}</Link>
+                <Link href={`/products/${product.id}`}>{product.id}</Link>
               </Table.RowHeaderCell>
               <Table.Cell>
-                <Link href={`/product/${product.id}`}>{product.name}</Link>
+                <Link href={`/products/${product.id}`}>{product.name}</Link>
               </Table.Cell>
               <Table.Cell>{product.description}</Table.Cell>
               <Table.Cell>{product.price}</Table.Cell>
