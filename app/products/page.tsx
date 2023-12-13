@@ -43,6 +43,7 @@ const productPage = () => {
       })
       .catch((error) => console.error("Error creating project:", error));
   };
+
   useEffect(() => {
     axios
       .get("/api/products")
@@ -114,7 +115,9 @@ const productPage = () => {
               </Table.Cell>
               <Table.Cell>{product.description}</Table.Cell>
               <Table.Cell>{product.price}</Table.Cell>
-              <Table.Cell>{product.id}</Table.Cell>
+              <Table.Cell>
+                <Button>Edit</Button>
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

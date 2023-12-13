@@ -28,7 +28,7 @@ const Sidebar = () => {
     <div
       className={`flex flex-col ${
         open ? "w-72" : "w-23"
-      } h-screen px-4 py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600 `}
+      } h-screen px-4 py-8 bg-white border-r dark:bg-gray-100 dark:border-gray-600 `}
     >
       <Link
         className="flex mx-4 space-x-2 mb-2 items-center"

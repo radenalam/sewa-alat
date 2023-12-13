@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { AspectRatio, Card, Inset, Strong } from "@radix-ui/themes";
+import { Card, Inset, Strong } from "@radix-ui/themes";
 
 type Product = {
   id: number;
