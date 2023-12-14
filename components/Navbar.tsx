@@ -1,25 +1,35 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
+import { BsBugFill } from "react-icons/bs";
+import { usePathname } from "next/navigation";
+import classnames from "classnames";
 import Image from "next/image";
 import { Button } from "@radix-ui/themes";
 
-const NavBar = () => (
-  <header className="w-full  absolute z-10">
-    <nav className="max-w-[1440px] mx-auto flex justify-between items-center sm:px-16 px-6 py-4 bg-transparent">
-      <Link href="/" className="flex justify-center items-center">
-        <Image
-          src="/logo.svg"
-          alt="logo"
-          width={118}
-          height={18}
-          className="object-contain"
-        />
-      </Link>
+const Navbar = () => {
+  const currentPath = usePathname();
+  console.log(currentPath);
 
-      <Link href={"/login"}>
-        <Button>Sign in</Button>
-      </Link>
+  const links = [
+    { label: "Dashboard", href: "/" },
+    { label: "Issues", href: "/issues" },
+  ];
+
+  return (
+    <nav className="mx-auto flex justify-between items-center sm:px-16 px-6 py-4 bg-transparent">
+      <Image src="/logo.svg" alt="logo" width={100} height={100} />
+      <div className="flex items-center space-x-2">
+        <Link
+          href={"/admin"}
+          className="text bg-gray-100 px-3 py-2 rounded-md hover:bg-gray-300 hover:px-3 hover:py-2 hover:rounded-md transition"
+        >
+          Admin
+        </Link>
+      </div>
     </nav>
-  </header>
-);
+  );
+};
 
-export default NavBar;
+export default Navbar;
