@@ -18,11 +18,11 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
 
   const links = [
-    { label: "Dashboard", href: "/", icon: <FaDesktop /> },
-    { label: "Barang", href: "/products", icon: <FaProjectDiagram /> },
-    { label: "Sewa", href: "/sewa", icon: <FaTasks /> },
-    { label: "Event", href: "/events", icon: <FaCalendarAlt /> },
-    { label: "Daftar Anggota", href: "/anggota", icon: <FaUsers /> },
+    { label: "Dashboard", href: "/admin", icon: <FaDesktop /> },
+    { label: "Barang", href: "/admin/products", icon: <FaProjectDiagram /> },
+    { label: "Sewa", href: "/admin/sewa", icon: <FaTasks /> },
+    { label: "Event", href: "/admin/events", icon: <FaCalendarAlt /> },
+    { label: "Daftar Anggota", href: "/admin/anggota", icon: <FaUsers /> },
   ];
   return (
     <div
