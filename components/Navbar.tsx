@@ -18,8 +18,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="mx-auto flex justify-between items-center sm:px-16 px-6 py-4 bg-transparent">
-      <Image src="/logo.svg" alt="logo" width={100} height={100} />
+    <nav className="mx-auto flex justify-between items-center sm:px-16 px-2 py-4 bg-transparent">
+      <Image src="/logo.svg" alt="logo" width={180} height={180} />
       <div className="flex items-center space-x-2">
         <Link
           href={"/admin"}

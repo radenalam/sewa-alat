@@ -4,9 +4,9 @@ import { Button } from "@radix-ui/themes";
 
 const HeroSection = () => {
   return (
-    <div className="h-max flex mb-36">
+    <div className="h-max flex">
       <div className="hero-section text-black flex-1 flex items-center">
-        <div className=" max-w-2xl px-8">
+        <div className=" max-w-2xl px-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Find, book, rent a camera—quick and super easy!
           </h1>
@@ -14,7 +14,11 @@ const HeroSection = () => {
             Streamline your camera rental experience with our effortless booking
             process.
           </p>
-          <Button className="bg-white text-blue-500 px-6 py-2 rounded-full font-medium text-lg shadow-md transition duration-300 hover:bg-blue-500 hover:text-white mt-4">
+          <Button
+            size="3"
+            color="orange"
+            className="bg-white text-blue-500 px-4 py-2 rounded-full font-medium  shadow-md transition duration-300 hover:bg-blue-500 hover:text-white mt-4"
+          >
             Explore
           </Button>
         </div>
