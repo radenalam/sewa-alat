@@ -23,6 +23,7 @@ const Sidebar = () => {
     { label: "Sewa", href: "/admin/sewa", icon: <FaTasks /> },
     { label: "Event", href: "/admin/events", icon: <FaCalendarAlt /> },
     { label: "Daftar Anggota", href: "/admin/anggota", icon: <FaUsers /> },
+    { label: "Setting", href: "/admin/setting", icon: <FaUsers /> },
   ];
   return (
     <div

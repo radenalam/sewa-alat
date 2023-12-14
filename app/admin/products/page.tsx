@@ -9,6 +9,7 @@ import {
   DialogRoot,
   DialogTitle,
   DialogTrigger,
+  IconButton,
   Link,
   Table,
   TextArea,
@@ -16,6 +17,7 @@ import {
 } from "@radix-ui/themes";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 
 type Product = {
   id: number;
@@ -84,6 +86,7 @@ const productPage = () => {
               placeholder="Price"
               {...register("price", { required: "Price is required" })}
             />
+
             <DialogClose>
               <Button onClick={handleSubmit(onSubmit)} className="float-right">
                 Save
@@ -102,7 +105,10 @@ const productPage = () => {
               <Table.ColumnHeaderCell>Nama Barang</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Deskripsi</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Harga</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Image</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className="text-right">
+                Action
+              </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -117,7 +123,29 @@ const productPage = () => {
                 <Table.Cell>{product.description}</Table.Cell>
                 <Table.Cell>{product.price}</Table.Cell>
                 <Table.Cell>
-                  <Button>Edit</Button>
+                  {product.image ? (
+                    <img
+                      src={`${product.image}`}
+                      alt={`${product.name}`}
+                      width={50}
+                      height={50}
+                    />
+                  ) : (
+                    <img
+                      src="/default_camera.png" // Ganti dengan path gambar default yang sesuai
+                      alt={`${product.name}`}
+                      width={50}
+                      height={50}
+                    />
+                  )}
+                </Table.Cell>
+                <Table.Cell className="text-right space-x-0.5">
+                  <IconButton>
+                    <FaEdit width="10" height="10" />
+                  </IconButton>
+                  <IconButton color="red">
+                    <FaRegTrashAlt width="10" height="10" />
+                  </IconButton>
                 </Table.Cell>
               </Table.Row>
             ))}
