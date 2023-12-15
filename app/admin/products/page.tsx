@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import {
+  AlertDialog,
   Button,
   Container,
   DialogClose,
@@ -9,6 +10,7 @@ import {
   DialogRoot,
   DialogTitle,
   DialogTrigger,
+  Flex,
   IconButton,
   Link,
   Table,
@@ -18,6 +20,8 @@ import {
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import { ProductProps } from "@/types";
+import ProductForm from "@/components/ProductForm";
 
 type Product = {
   id: number;
@@ -46,6 +50,17 @@ const productPage = () => {
       .catch((error) => console.error("Error creating project:", error));
   };
 
+  const handleDelete = (id: number) => {
+    axios
+      .delete(`/api/products/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          setProduct(product.filter((item) => item.id !== id));
+        }
+      })
+      .catch((error) => console.error("Error deleting project:", error));
+  };
+
   useEffect(() => {
     axios
       .get("/api/products")
@@ -62,41 +77,7 @@ const productPage = () => {
   return (
     <div>
       <Container>
-        <DialogRoot>
-          <DialogTrigger>
-            <Button className="float-right" mx="3" my="3">
-              Tambah Barang
-            </Button>
-          </DialogTrigger>
-
-          <DialogContent style={{ maxWidth: 500 }}>
-            <DialogTitle>Add Project</DialogTitle>
-            <TextField.Input
-              mb="2"
-              placeholder="Title"
-              {...register("name", { required: "Title is required" })}
-            />
-            <TextArea
-              mb="2"
-              placeholder="Description"
-              {...register("description")}
-            />
-            <TextField.Input
-              mb="2"
-              placeholder="Price"
-              {...register("price", { required: "Price is required" })}
-            />
-
-            <DialogClose>
-              <Button onClick={handleSubmit(onSubmit)} className="float-right">
-                Save
-              </Button>
-            </DialogClose>
-            <DialogClose>
-              <Button className="float-right">Close</Button>
-            </DialogClose>
-          </DialogContent>
-        </DialogRoot>
+        <ProductForm onSubmit={onSubmit} />
 
         <Table.Root>
           <Table.Header>
@@ -134,8 +115,8 @@ const productPage = () => {
                     <img
                       src="/default_camera.png" // Ganti dengan path gambar default yang sesuai
                       alt={`${product.name}`}
-                      width={50}
-                      height={50}
+                      width={30}
+                      height={30}
                     />
                   )}
                 </Table.Cell>
@@ -143,9 +124,39 @@ const productPage = () => {
                   <IconButton>
                     <FaEdit width="10" height="10" />
                   </IconButton>
-                  <IconButton color="red">
-                    <FaRegTrashAlt width="10" height="10" />
-                  </IconButton>
+
+                  <AlertDialog.Root>
+                    <AlertDialog.Trigger>
+                      <IconButton color="red">
+                        <FaRegTrashAlt width="10" height="10" />
+                      </IconButton>
+                    </AlertDialog.Trigger>
+                    <AlertDialog.Content style={{ maxWidth: 450 }}>
+                      <AlertDialog.Title>
+                        Delete {product.name}
+                      </AlertDialog.Title>
+                      <AlertDialog.Description size="2">
+                        Apakah anda yakin menghapus {product.name}.
+                      </AlertDialog.Description>
+
+                      <Flex gap="3" mt="4" justify="end">
+                        <AlertDialog.Cancel>
+                          <Button variant="soft" color="gray">
+                            Cancel
+                          </Button>
+                        </AlertDialog.Cancel>
+                        <AlertDialog.Action>
+                          <Button
+                            variant="solid"
+                            color="red"
+                            onClick={() => handleDelete(product.id)}
+                          >
+                            Delete Product
+                          </Button>
+                        </AlertDialog.Action>
+                      </Flex>
+                    </AlertDialog.Content>
+                  </AlertDialog.Root>
                 </Table.Cell>
               </Table.Row>
             ))}

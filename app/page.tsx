@@ -18,34 +18,35 @@ const Home = () => {
   return (
     <div>
       <Hero />
-      <div className="px-20">
-        <h1 className=" pt-20 text-3xl font-bold">Camera Catalog</h1>
-        <p className="pt-1">Explore out camera you might like</p>
+      <div className="flex flex-col min-h-screen">
+        <div className="px-20 flex-grow">
+          <h1 className="pt-20 text-3xl font-bold">Kamera Katalog</h1>
+          <p className="pt-1">Explore out camera you might like</p>
 
-        <div className=" py-10 max-w-sm">
-          <TextFieldRoot>
-            <TextFieldSlot>
-              <FaMagnifyingGlass />
-            </TextFieldSlot>
-            <TextFieldInput placeholder="Title" />
-          </TextFieldRoot>
-        </div>
+          <div className=" py-10 max-w-sm">
+            <TextFieldRoot>
+              <TextFieldSlot>
+                <FaMagnifyingGlass />
+              </TextFieldSlot>
+              <TextFieldInput placeholder="Kamera" />
+            </TextFieldRoot>
+          </div>
 
-        <div>
-          <Grid columns="3" gap="5" width="auto" height="auto">
-            <Box height="9">
-              <ProductCard />
-            </Box>
-            <Box height="9">
-              <ProductCard />
-            </Box>
-            <Box height="9">
-              <ProductCard />
-            </Box>
-          </Grid>
+          <div>
+            <Grid columns="3" gap="5" width="auto" height="max-content">
+              <Box height="9">
+                <ProductCard />
+              </Box>
+              <Box height="9">
+                <ProductCard />
+              </Box>
+              <Box height="9">
+                <ProductCard />
+              </Box>
+            </Grid>
+          </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

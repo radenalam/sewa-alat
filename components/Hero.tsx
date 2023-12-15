@@ -8,7 +8,7 @@ const HeroSection = () => {
       <div className="hero-section text-black flex-1 flex items-center">
         <div className=" max-w-2xl px-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Find, book, rent a camera—quick and super easy!
+            Cari, Booking, rental kamera—cepat and mudah!
           </h1>
           <p className="mb-5">
             Streamline your camera rental experience with our effortless booking

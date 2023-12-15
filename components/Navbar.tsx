@@ -22,7 +22,8 @@ const Navbar = () => {
       <Image src="/logo.svg" alt="logo" width={180} height={180} />
       <div className="flex items-center space-x-2">
         <Link
-          href={"/admin"}
+          href="/admin"
+          replace
           className="text bg-gray-100 px-3 py-2 rounded-md hover:bg-gray-300 hover:px-3 hover:py-2 hover:rounded-md transition"
         >
           Admin

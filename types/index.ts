@@ -1,4 +1,4 @@
-export interface Products {
+export interface ProductProps {
   id: number;
   name: String;
   description: String | null;
