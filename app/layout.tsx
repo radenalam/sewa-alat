@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
-import Sidebar from "@/components/sideBar";
 import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -24,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Theme>
           <NavBar />
-          <main>{children}</main>
+          {children}
           <Footer />
         </Theme>
       </body>

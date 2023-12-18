@@ -38,7 +38,7 @@ const Sidebar = () => {
         }}
       >
         <FaBookOpen />
-        {open && <h1 className="text-xl">Sewa Serufo</h1>}
+        {open && <h1 className="text-xl">Admin Rental</h1>}
       </div>
 
       <nav className="">

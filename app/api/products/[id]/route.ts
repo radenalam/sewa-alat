@@ -44,7 +44,9 @@ export async function PUT(
     });
 
     return NextResponse.json(updatedProduct, { status: 201 });
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error deleting Product:", error);
+  }
 }
 
 export async function DELETE(

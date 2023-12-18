@@ -6,7 +6,7 @@ import { BsBugFill } from "react-icons/bs";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
 import Image from "next/image";
-import { Button } from "@radix-ui/themes";
+import { Button, Strong } from "@radix-ui/themes";
 
 const Footer = () => {
   const currentPath = usePathname();
@@ -18,10 +18,18 @@ const Footer = () => {
   ];
 
   return (
-    <div className="flex flex-col">
-      <div className="flex">
+    <div className="flex flex-col px-4 py-4">
+      <div className="flex flex-col justify-start items-start gap-6 px-2">
         <img src="/logo.svg" alt="" width={180} height={180} />
         <p>Raden Alam © 2023</p>
+        <p>All Rights Reserved ©</p>
+      </div>
+
+      <div>
+        <p>
+          <Strong>About</Strong>
+        </p>
+        <p>How it Works</p>
       </div>
     </div>
   );

@@ -19,9 +19,8 @@ import {
 } from "@radix-ui/themes";
 import axios from "axios";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
-import AddProductForm from "@/components/AddProductForm";
-import EditProduct from "@/components/EditProductForm";
 import EditProductForm from "@/components/EditProductForm";
+import AddProductForm from "@/components/AddProductForm";
 
 type Product = {
   id: number;
@@ -35,7 +34,7 @@ const productPage = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [open, setOpen] = useState(false);
 
-  const handleSubmit = (data: Product) => {
+  const onSubmit = (data: Product) => {
     data.price = Number(data.price);
     if (!data.image) {
       data.image = null;
@@ -65,11 +64,12 @@ const productPage = () => {
       .catch((error) => console.error("Error deleting project:", error));
   };
 
-  const handleEdit = (product: Product) => {
+  const onEdit = (product: Product) => {
     product.price = Number(product.price);
     if (!product.image) {
       product.image = null;
     }
+    console.log(product.id);
     axios.put(`/api/products/${product.id}`, product);
   };
 
@@ -90,7 +90,7 @@ const productPage = () => {
     <div>
       <Container>
         <div className="float-right">
-          <AddProductForm onSubmit={handleSubmit} />
+          <AddProductForm onSubmit={onSubmit} />
         </div>
 
         <Table.Root>
@@ -137,7 +137,7 @@ const productPage = () => {
                 <Table.Cell className="text-right space-x-0.5">
                   <IconButton>
                     {/* <FaEdit width="10" height="10" /> */}
-                    <EditProductForm onEdit={handleEdit} product={product} />
+                    <EditProductForm onEdit={onEdit} product={product} />
                   </IconButton>
 
                   <AlertDialog.Root>

@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ProductProps } from "@/types";
 import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes";

@@ -9,7 +9,7 @@ import {
   TextFieldRoot,
   TextFieldSlot,
 } from "@radix-ui/themes";
-import Hero from "../components/Hero";
+import Hero from "@/components/Hero";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import ProductCard from "@/components/ProductCard";
 import Footer from "@/components/Footer";
