@@ -34,7 +34,8 @@ type Product = {
 const productPage = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [open, setOpen] = useState(false);
-  const onSubmit = (data: Product) => {
+
+  const handleSubmit = (data: Product) => {
     data.price = Number(data.price);
     if (!data.image) {
       data.image = null;
@@ -89,7 +90,7 @@ const productPage = () => {
     <div>
       <Container>
         <div className="float-right">
-          <AddProductForm onSubmit={onSubmit} />
+          <AddProductForm onSubmit={handleSubmit} />
         </div>
 
         <Table.Root>
