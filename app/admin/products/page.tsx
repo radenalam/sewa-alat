@@ -18,10 +18,10 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
-import { ProductProps } from "@/types";
-import ProductForm from "@/components/ProductForm";
+import AddProductForm from "@/components/AddProductForm";
+import EditProduct from "@/components/EditProductForm";
+import EditProductForm from "@/components/EditProductForm";
 
 type Product = {
   id: number;
@@ -33,11 +33,14 @@ type Product = {
 
 const productPage = () => {
   const [product, setProduct] = useState<Product[]>([]);
-  const { register, handleSubmit } = useForm<Product>({});
+  const [open, setOpen] = useState(false);
   const onSubmit = (data: Product) => {
     data.price = Number(data.price);
     if (!data.image) {
       data.image = null;
+    }
+    if (!data.description) {
+      data.description = null;
     }
     axios
       .post("/api/products", data)
@@ -61,6 +64,14 @@ const productPage = () => {
       .catch((error) => console.error("Error deleting project:", error));
   };
 
+  const handleEdit = (product: Product) => {
+    product.price = Number(product.price);
+    if (!product.image) {
+      product.image = null;
+    }
+    axios.put(`/api/products/${product.id}`, product);
+  };
+
   useEffect(() => {
     axios
       .get("/api/products")
@@ -77,7 +88,9 @@ const productPage = () => {
   return (
     <div>
       <Container>
-        <ProductForm onSubmit={onSubmit} />
+        <div className="float-right">
+          <AddProductForm onSubmit={onSubmit} />
+        </div>
 
         <Table.Root>
           <Table.Header>
@@ -122,7 +135,8 @@ const productPage = () => {
                 </Table.Cell>
                 <Table.Cell className="text-right space-x-0.5">
                   <IconButton>
-                    <FaEdit width="10" height="10" />
+                    {/* <FaEdit width="10" height="10" /> */}
+                    <EditProductForm onEdit={handleEdit} product={product} />
                   </IconButton>
 
                   <AlertDialog.Root>
