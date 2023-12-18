@@ -1,10 +1,18 @@
 "use client";
 
 import { ProductProps } from "@/types";
-import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Dialog,
+  Flex,
+  IconButton,
+  TextArea,
+  TextField,
+} from "@radix-ui/themes";
 import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { FaEdit } from "react-icons/fa";
 
 type EditProductFormProps = {
   onEdit: SubmitHandler<ProductProps>;
@@ -17,7 +25,9 @@ const EditProduct = ({ onEdit, product }: EditProductFormProps) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button>Edit Barang </Button>
+        <IconButton>
+          <FaEdit width="10" height="10" />
+        </IconButton>
       </Dialog.Trigger>
 
       <Dialog.Content style={{ maxWidth: 450 }}>
@@ -30,13 +40,13 @@ const EditProduct = ({ onEdit, product }: EditProductFormProps) => {
           <TextField.Input
             mb="1"
             placeholder="Title"
-            defaultValue={product?.name}
+            defaultValue={product?.name as string}
             {...register("name", { required: "Title is required" })}
           />
           <TextArea
             mb="1"
             placeholder="Description"
-            defaultValue={product?.description}
+            defaultValue={product?.description as string}
             {...register("description")}
           />
           <TextField.Input

@@ -135,10 +135,7 @@ const productPage = () => {
                   )}
                 </Table.Cell>
                 <Table.Cell className="text-right space-x-0.5">
-                  <IconButton>
-                    {/* <FaEdit width="10" height="10" /> */}
-                    <EditProductForm onEdit={onEdit} product={product} />
-                  </IconButton>
+                  <EditProductForm onEdit={onEdit} product={product} />
 
                   <AlertDialog.Root>
                     <AlertDialog.Trigger>
@@ -151,7 +148,7 @@ const productPage = () => {
                         Delete {product.name}
                       </AlertDialog.Title>
                       <AlertDialog.Description size="2">
-                        Apakah anda yakin menghapus {product.name}.
+                        Apakah anda yakin menghapus {product.name} ?
                       </AlertDialog.Description>
 
                       <Flex gap="3" mt="4" justify="end">
