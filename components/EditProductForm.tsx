@@ -29,8 +29,12 @@ const EditProduct = ({ product }: EditProductFormProps) => {
     if (!product.image) {
       product.image = null;
     }
-    console.log(product.id);
-    axios.put(`/api/products/${product?.id}`, product);
+    axios.put(`/api/products/${product?.id}`, product).then((response) => {
+      console.log("Response:", response);
+      if (response.status === 201) {
+        window.location.reload();
+      }
+    });
   };
   return (
     <Dialog.Root>
