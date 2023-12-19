@@ -43,13 +43,13 @@ const productPage = () => {
   return (
     <div>
       <Container className="flex flex-col">
+        <div className="text-right py-4 px-4">
+          <AddProductForm />
+        </div>
         <div className="px-4 py-4">
-          <div className="float-right py-4 px-4">
-            <AddProductForm />
-          </div>
-          <Table.Root>
+          <Table.Root variant="surface">
             <Table.Header>
-              <Table.Row>
+              <Table.Row align={"center"}>
                 <Table.ColumnHeaderCell>ID</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>Nama Barang</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>Deskripsi</Table.ColumnHeaderCell>

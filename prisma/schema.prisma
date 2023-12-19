@@ -15,6 +15,7 @@ model User {
   email     String    @unique
   name      String?
   password  String
+  alamat    String?
   isAdmin   Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -32,13 +33,18 @@ model Product {
 }
 
 model Sewa {
-  id       Int @id @default(autoincrement())
-  idBarang Int
+  id           Int      @id @default(autoincrement())
+  idBarang     Int
+  idAnggota    Int
+  tgl_mulai    DateTime
+  tgl_selesai  DateTime
+  createdAt    DateTime
+  statusBarang String
 }
 
 model Anggota {
   id           Int    @id @default(autoincrement())
+  nama         String
   nomorAnggota Int    @unique
   angkatan     Int
-  nama         String
 }
