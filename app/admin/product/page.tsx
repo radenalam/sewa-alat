@@ -15,6 +15,7 @@ import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import EditProductForm from "@/components/EditProductForm";
 import AddProductForm from "@/components/AddProductForm";
 import DeleteProductForm from "@/components/DeleteProductForm";
+import { ProductProps } from "@/types/index";
 
 type Product = {
   id: number;
@@ -25,7 +26,7 @@ type Product = {
 };
 
 const productPage = () => {
-  const [product, setProduct] = useState<Product[]>([]);
+  const [product, setProduct] = useState<ProductProps[]>([]);
 
   useEffect(() => {
     axios
@@ -41,67 +42,65 @@ const productPage = () => {
   }, []);
 
   return (
-    <div>
-      <Container className="flex flex-col">
-        <div className="text-right py-4 px-4">
-          <AddProductForm />
-        </div>
-        <div className="px-4 py-4">
-          <Table.Root variant="surface">
-            <Table.Header>
-              <Table.Row align={"center"}>
-                <Table.ColumnHeaderCell>ID</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Nama Barang</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Deskripsi</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Harga</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell justify={"center"}>
-                  Image
-                </Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell width={100} justify={"end"}>
-                  Action
-                </Table.ColumnHeaderCell>
+    <div className="flex flex-col">
+      <div className="text-right py-4 px-4">
+        <AddProductForm />
+      </div>
+      <div className="px-4 py-4">
+        <Table.Root variant="surface">
+          <Table.Header>
+            <Table.Row align={"center"}>
+              <Table.ColumnHeaderCell>ID</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Nama Barang</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Deskripsi</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Harga</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell justify={"center"}>
+                Image
+              </Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell width={100} justify={"end"}>
+                Action
+              </Table.ColumnHeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {product.map((product, i) => (
+              <Table.Row align="center" key={i}>
+                <Table.RowHeaderCell width={50}>
+                  {product.id}
+                </Table.RowHeaderCell>
+                <Table.Cell>{product.name}</Table.Cell>
+                <Table.Cell>{product.description}</Table.Cell>
+                <Table.Cell>{product.price}</Table.Cell>
+
+                <Table.Cell align="center">
+                  {product.image ? (
+                    <img
+                      src={`${product.image}`}
+                      alt={`${product.name}`}
+                      width={50}
+                      height={50}
+                    />
+                  ) : (
+                    <img
+                      src="/default_camera.png" // Ganti dengan path gambar default yang sesuai
+                      alt={`${product.name}`}
+                      width={50}
+                      height={50}
+                    />
+                  )}
+                </Table.Cell>
+
+                <Table.Cell align="right">
+                  <div className="float-right space-x-0.5 flex flex-row">
+                    <EditProductForm product={product} />
+                    <DeleteProductForm product={product} />
+                  </div>
+                </Table.Cell>
               </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {product.map((product, i) => (
-                <Table.Row align="center" key={i}>
-                  <Table.RowHeaderCell width={50}>
-                    {product.id}
-                  </Table.RowHeaderCell>
-                  <Table.Cell>{product.name}</Table.Cell>
-                  <Table.Cell>{product.description}</Table.Cell>
-                  <Table.Cell>{product.price}</Table.Cell>
-
-                  <Table.Cell align="center">
-                    {product.image ? (
-                      <img
-                        src={`${product.image}`}
-                        alt={`${product.name}`}
-                        width={50}
-                        height={50}
-                      />
-                    ) : (
-                      <img
-                        src="/default_camera.png" // Ganti dengan path gambar default yang sesuai
-                        alt={`${product.name}`}
-                        width={50}
-                        height={50}
-                      />
-                    )}
-                  </Table.Cell>
-
-                  <Table.Cell align="right">
-                    <div className="float-right space-x-0.5 flex flex-row">
-                      <EditProductForm product={product} />
-                      <DeleteProductForm product={product} />
-                    </div>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
-        </div>
-      </Container>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </div>
     </div>
   );
 };
