@@ -7,7 +7,7 @@ const ProductCard = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative group car-card bg-slate-100 rounded-lg items-center pb-1 hover:shadow-md">
+    <div className=" group car-card bg-slate-100 rounded-lg items-center pb-1 hover:shadow-md">
       <div className="mx-5 my-5">
         <div className=" rounded-lg ">
           <h2 className="text-[22px] leading-[26px] font-bold capitalize pt-4">

@@ -3,16 +3,34 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ProductProps } from "@/types";
 import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes";
+import axios from "axios";
 
-type ProductFormProps = {
-  onSubmit: SubmitHandler<ProductProps>;
+type AddProductFormProps = {
+  // onSubmit: SubmitHandler<ProductProps>;
   product?: ProductProps;
 };
 
-const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, product }) => {
-  const { handleSubmit, register } = useForm<ProductProps>({
-    defaultValues: product,
-  });
+const ProductForm = () => {
+  const { handleSubmit, register } = useForm<ProductProps>({});
+
+  const onSubmit = (product: ProductProps) => {
+    product.price = Number(product.price);
+    if (!product.image) {
+      product.image = null;
+    }
+    if (!product.description) {
+      product.description = null;
+    }
+    axios
+      .post("/api/products", product)
+      .then((response) => {
+        console.log("Response:", response);
+        if (response.status === 201) {
+          window.location.reload();
+        }
+      })
+      .catch((error) => console.error("Error creating project:", error));
+  };
 
   return (
     <div>

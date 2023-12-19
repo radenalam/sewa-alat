@@ -5,17 +5,10 @@ import {
   AlertDialog,
   Button,
   Container,
-  DialogClose,
-  DialogContent,
-  DialogRoot,
-  DialogTitle,
-  DialogTrigger,
   Flex,
   IconButton,
   Link,
   Table,
-  TextArea,
-  TextField,
 } from "@radix-ui/themes";
 import axios from "axios";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
@@ -32,26 +25,6 @@ type Product = {
 
 const productPage = () => {
   const [product, setProduct] = useState<Product[]>([]);
-  const [open, setOpen] = useState(false);
-
-  const onSubmit = (data: Product) => {
-    data.price = Number(data.price);
-    if (!data.image) {
-      data.image = null;
-    }
-    if (!data.description) {
-      data.description = null;
-    }
-    axios
-      .post("/api/products", data)
-      .then((response) => {
-        console.log("Response:", response);
-        if (response.status === 201) {
-          setProduct([...product, response.data]);
-        }
-      })
-      .catch((error) => console.error("Error creating project:", error));
-  };
 
   const handleDelete = (id: number) => {
     axios
@@ -62,15 +35,6 @@ const productPage = () => {
         }
       })
       .catch((error) => console.error("Error deleting project:", error));
-  };
-
-  const onEdit = (product: Product) => {
-    product.price = Number(product.price);
-    if (!product.image) {
-      product.image = null;
-    }
-    console.log(product.id);
-    axios.put(`/api/products/${product.id}`, product);
   };
 
   useEffect(() => {
@@ -90,7 +54,7 @@ const productPage = () => {
     <div>
       <Container>
         <div className="float-right">
-          <AddProductForm onSubmit={onSubmit} />
+          <AddProductForm />
         </div>
 
         <Table.Root>
@@ -117,6 +81,7 @@ const productPage = () => {
                 </Table.Cell>
                 <Table.Cell>{product.description}</Table.Cell>
                 <Table.Cell>{product.price}</Table.Cell>
+
                 <Table.Cell>
                   {product.image ? (
                     <img
@@ -134,8 +99,9 @@ const productPage = () => {
                     />
                   )}
                 </Table.Cell>
+
                 <Table.Cell className="text-right space-x-0.5">
-                  <EditProductForm onEdit={onEdit} product={product} />
+                  <EditProductForm product={product} />
 
                   <AlertDialog.Root>
                     <AlertDialog.Trigger>

@@ -9,19 +9,29 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
+import axios from "axios";
 import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 
 type EditProductFormProps = {
-  onEdit: SubmitHandler<ProductProps>;
+  // onEdit: SubmitHandler<ProductProps>;
   product?: ProductProps;
 };
 
-const EditProduct = ({ onEdit, product }: EditProductFormProps) => {
-  const { handleSubmit, register } = useForm<ProductProps>();
-
+const EditProduct = ({ product }: EditProductFormProps) => {
+  const { handleSubmit, register } = useForm<ProductProps>({
+    defaultValues: product,
+  });
+  const onEdit = (product: ProductProps) => {
+    product.price = Number(product.price);
+    if (!product.image) {
+      product.image = null;
+    }
+    console.log(product.id);
+    axios.put(`/api/products/${product?.id}`, product);
+  };
   return (
     <Dialog.Root>
       <Dialog.Trigger>
@@ -40,19 +50,16 @@ const EditProduct = ({ onEdit, product }: EditProductFormProps) => {
           <TextField.Input
             mb="1"
             placeholder="Title"
-            defaultValue={product?.name as string}
             {...register("name", { required: "Title is required" })}
           />
           <TextArea
             mb="1"
             placeholder="Description"
-            defaultValue={product?.description as string}
             {...register("description")}
           />
           <TextField.Input
             mb="1"
             placeholder="Price"
-            defaultValue={product?.price}
             {...register("price", { required: "Price is required" })}
           />
         </Flex>
