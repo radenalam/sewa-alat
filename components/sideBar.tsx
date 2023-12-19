@@ -19,9 +19,8 @@ const Sidebar = () => {
 
   const links = [
     { label: "Dashboard", href: "/admin", icon: <FaDesktop /> },
-    { label: "Barang", href: "/admin/products", icon: <FaProjectDiagram /> },
-    { label: "Sewa", href: "/admin/sewa", icon: <FaTasks /> },
-    { label: "Event", href: "/admin/events", icon: <FaCalendarAlt /> },
+    { label: "Barang", href: "/admin/product", icon: <FaProjectDiagram /> },
+    { label: "Daftar Sewa", href: "/admin/sewa", icon: <FaTasks /> },
     { label: "Daftar Anggota", href: "/admin/anggota", icon: <FaUsers /> },
     { label: "Home", href: "/", icon: <FaUsers /> },
   ];

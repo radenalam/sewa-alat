@@ -11,7 +11,7 @@ type DeleteProductFormProps = {
 const DeleteProductForm = ({ product }: DeleteProductFormProps) => {
   const onDelete = (id: number) => {
     axios
-      .delete(`/api/products/${id}`)
+      .delete(`/api/product/${id}`)
       .then((response) => {
         if (response.status === 200) {
           window.location.reload();

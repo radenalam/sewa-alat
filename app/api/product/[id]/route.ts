@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { id: Number } }
 ) {
   try {
-    const products = await prisma.products.findUnique({
+    const products = await prisma.product.findUnique({
       where: { id: Number(params.id) },
     });
 
@@ -38,7 +38,7 @@ export async function PUT(
     }
 
     // Update the project based on the ID
-    const updatedProduct = await prisma.products.update({
+    const updatedProduct = await prisma.product.update({
       where: { id: Number(params.id) },
       data: validation.data,
     });
@@ -54,7 +54,7 @@ export async function DELETE(
   { params }: { params: { id: Number } }
 ) {
   try {
-    const deletedProduct = await prisma.products.delete({
+    const deletedProduct = await prisma.product.delete({
       where: { id: Number(params.id) },
     });
 

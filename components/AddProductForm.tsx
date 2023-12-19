@@ -22,7 +22,7 @@ const ProductForm = () => {
       product.description = null;
     }
     axios
-      .post("/api/products", product)
+      .post("/api/product", product)
       .then((response) => {
         console.log("Response:", response);
         if (response.status === 201) {

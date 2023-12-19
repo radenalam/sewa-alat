@@ -21,7 +21,7 @@ model User {
   deletedAt DateTime?
 }
 
-model Products {
+model Product {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
@@ -29,6 +29,11 @@ model Products {
   image       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Sewa {
+  id       Int @id @default(autoincrement())
+  idBarang Int
 }
 
 model Anggota {

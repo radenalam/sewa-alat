@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
 
-  const newProduct = await prisma.products.create({
+  const newProduct = await prisma.product.create({
     data: validation.data,
   });
 
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const products = await prisma.products.findMany();
+  const products = await prisma.product.findMany();
 
   return NextResponse.json(products, { status: 200 });
 }

@@ -19,7 +19,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/products/${params.id}`
+          `http://localhost:3000/api/product/${params.id}`
         );
         setProduct(response.data.products);
       } catch (error) {

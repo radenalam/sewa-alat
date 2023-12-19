@@ -1,7 +1,7 @@
 import { Table } from "@radix-ui/themes";
 import React from "react";
 
-const SewaPage = () => {
+const PengambilanPage = () => {
   return (
     <div>
       <Table.Root>
@@ -37,4 +37,4 @@ const SewaPage = () => {
   );
 };
 
-export default SewaPage;
+export default PengambilanPage;

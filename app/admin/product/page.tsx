@@ -29,7 +29,7 @@ const productPage = () => {
 
   useEffect(() => {
     axios
-      .get("/api/products")
+      .get("/api/product")
       .then((response) => {
         if (Array.isArray(response.data)) {
           setProduct(response.data);
