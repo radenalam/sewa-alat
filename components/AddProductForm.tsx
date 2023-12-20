@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ProductProps } from "@/types";
 import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes";
 import axios from "axios";
+import ImageUploader from "@/components/ImageUploader";
 
 type AddProductFormProps = {
   // onSubmit: SubmitHandler<ProductProps>;
@@ -61,6 +62,7 @@ const ProductForm = () => {
               placeholder="Price"
               {...register("price", { required: "Price is required" })}
             />
+            <ImageUploader />
           </Flex>
 
           <Flex gap="3" mt="4" justify="end">
