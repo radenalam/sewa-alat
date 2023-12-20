@@ -33,13 +33,16 @@ model Product {
 }
 
 model Sewa {
-  id           Int      @id @default(autoincrement())
-  idBarang     Int
-  idAnggota    Int
-  tgl_mulai    DateTime
-  tgl_selesai  DateTime
-  createdAt    DateTime
-  statusBarang String
+  id          Int      @id @default(autoincrement())
+  idBarang    Int
+  idUser      Int
+  nama        String
+  alamat      String
+  no_telp     Int
+  tgl_mulai   DateTime
+  tgl_selesai DateTime
+  createdAt   DateTime
+  // statusBarang String
 }
 
 model Anggota {

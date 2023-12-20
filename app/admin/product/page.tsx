@@ -16,14 +16,7 @@ import EditProductForm from "@/components/EditProductForm";
 import AddProductForm from "@/components/AddProductForm";
 import DeleteProductForm from "@/components/DeleteProductForm";
 import { ProductProps } from "@/types/index";
-
-type Product = {
-  id: number;
-  name: String;
-  description: String | null;
-  price: number;
-  image: String | null;
-};
+import Image from "next/image";
 
 const productPage = () => {
   const [product, setProduct] = useState<ProductProps[]>([]);
@@ -73,21 +66,12 @@ const productPage = () => {
                 <Table.Cell>{product.price}</Table.Cell>
 
                 <Table.Cell align="center">
-                  {product.image ? (
-                    <img
-                      src={`${product.image}`}
-                      alt={`${product.name}`}
-                      width={50}
-                      height={50}
-                    />
-                  ) : (
-                    <img
-                      src="/default_camera.png" // Ganti dengan path gambar default yang sesuai
-                      alt={`${product.name}`}
-                      width={50}
-                      height={50}
-                    />
-                  )}
+                  <Image
+                    src={product.image ?? "/default_camera.png"}
+                    alt={product.name}
+                    width={50}
+                    height={50}
+                  />
                 </Table.Cell>
 
                 <Table.Cell align="right">

@@ -1,7 +1,7 @@
 export interface ProductProps {
   id: number;
-  name: String;
-  description: String | null;
+  name: string;
+  description: string | null;
   price: number;
-  image: String | null;
+  image: string | null;
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { Badge, Button, Table } from "@radix-ui/themes";
-import { DropdownMenu } from "@radix-ui/themes";
+import DropdownAction from "@/components/DropdownAction";
+import { Badge, Table } from "@radix-ui/themes";
 import React from "react";
 
 const PengambilanPage = () => {
@@ -21,52 +21,45 @@ const PengambilanPage = () => {
         </Table.Header>
 
         <Table.Body>
-          <Table.Row align={"center"}>
+          <Table.Row>
             <Table.RowHeaderCell>1</Table.RowHeaderCell>
             <Table.Cell>Canon 600D</Table.Cell>
             <Table.Cell>Alam Sanjaya</Table.Cell>
             <Table.Cell>21 Desember 2023</Table.Cell>
             <Table.Cell>25 Desember 2023</Table.Cell>
             <Table.Cell>
-              <Badge color="blue">Belum diambil</Badge>
+              <Badge color="green">Belum diambil</Badge>
             </Table.Cell>
             <Table.Cell>
-              <div>
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger>
-                    <Button variant="soft">Options</Button>
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item shortcut="⌘ E">Edit</DropdownMenu.Item>
-                    <DropdownMenu.Item shortcut="⌘ D">
-                      Duplicate
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Separator />
-                    <DropdownMenu.Item shortcut="⌘ N">
-                      Archive
-                    </DropdownMenu.Item>
+              <DropdownAction />
+            </Table.Cell>
+          </Table.Row>
 
-                    <DropdownMenu.Sub>
-                      <DropdownMenu.SubTrigger>More</DropdownMenu.SubTrigger>
-                      <DropdownMenu.SubContent>
-                        <DropdownMenu.Item>Move to project…</DropdownMenu.Item>
-                        <DropdownMenu.Item>Move to folder…</DropdownMenu.Item>
+          <Table.Row align={"center"}>
+            <Table.RowHeaderCell>2</Table.RowHeaderCell>
+            <Table.Cell>Sony A6000</Table.Cell>
+            <Table.Cell>Raihan Azka</Table.Cell>
+            <Table.Cell>21 Desember 2023</Table.Cell>
+            <Table.Cell>25 Desember 2023</Table.Cell>
+            <Table.Cell>
+              <Badge color="blue">Sedang Dipinjam</Badge>
+            </Table.Cell>
+            <Table.Cell>
+              <DropdownAction />
+            </Table.Cell>
+          </Table.Row>
 
-                        <DropdownMenu.Separator />
-                        <DropdownMenu.Item>Advanced options…</DropdownMenu.Item>
-                      </DropdownMenu.SubContent>
-                    </DropdownMenu.Sub>
-
-                    <DropdownMenu.Separator />
-                    <DropdownMenu.Item>Share</DropdownMenu.Item>
-                    <DropdownMenu.Item>Add to favorites</DropdownMenu.Item>
-                    <DropdownMenu.Separator />
-                    <DropdownMenu.Item shortcut="⌘ ⌫" color="red">
-                      Delete
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
-                </DropdownMenu.Root>
-              </div>
+          <Table.Row align={"center"}>
+            <Table.RowHeaderCell>3</Table.RowHeaderCell>
+            <Table.Cell>Canon 5D</Table.Cell>
+            <Table.Cell>Sanjaya</Table.Cell>
+            <Table.Cell>21 Desember 2023</Table.Cell>
+            <Table.Cell>25 Desember 2023</Table.Cell>
+            <Table.Cell>
+              <Badge color="red">Belum dikembalikan</Badge>
+            </Table.Cell>
+            <Table.Cell>
+              <DropdownAction />
             </Table.Cell>
           </Table.Row>
         </Table.Body>
