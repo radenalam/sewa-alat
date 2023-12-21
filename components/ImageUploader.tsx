@@ -43,7 +43,7 @@ const ImageUploader: React.FC = () => {
       </div>
 
       {/* Cropper */}
-      <div hidden={cropperHide} className="border px-2 py-2 items-center">
+      <div hidden={cropperHide} className="border  my-2 ">
         <Cropper
           src={uploadedImage}
           style={{ height: 250, width: "100%", margin: "auto" }}
@@ -55,14 +55,23 @@ const ImageUploader: React.FC = () => {
           ref={cropperRef}
         />
 
-        <Button onClick={onCrop}>Crop Image</Button>
+        <Button style={{ marginTop: "10px" }} onClick={onCrop}>
+          Crop Image
+        </Button>
       </div>
 
       {/* Hasil Crop */}
-      <div hidden={croppedImageHide}>
+      <div hidden={croppedImageHide} className="border my-2 m-auto">
         <Strong>Cropped Image</Strong>
-        <img src={croppedImage} alt="cropped image" width={500} height={500} />
+        <img
+          src={croppedImage}
+          alt="cropped image"
+          width={250}
+          height={250}
+          style={{ margin: "auto" }}
+        />
         <Button
+          style={{ marginTop: "10px" }}
           onClick={() => {
             setCropperHide(false);
             setCroppedImageHide(true);
