@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Button, Strong } from "@radix-ui/themes";
+import axios from "axios";
 
 const ImageUploader: React.FC = () => {
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -21,12 +22,20 @@ const ImageUploader: React.FC = () => {
   };
   const onCrop = () => {
     const cropper: any = cropperRef.current?.cropper;
-    // console.log(cropper.getCroppedCanvas().toDataURL());
     setCroppedImage(cropper.getCroppedCanvas().toDataURL());
     if (croppedImage) {
       setCroppedImageHide(false); // Menampilkan Hasil Crop
       setCropperHide(true); // Menutup Cropper
-      console.log(croppedImage);
+    }
+  };
+
+  const onSave = () => {
+    if (croppedImage) {
+      const formData = new FormData();
+      formData.append("image", croppedImage);
+      axios.post("/api/image", formData).then((res) => {
+        console.log(res.data);
+      });
     }
   };
 
@@ -78,6 +87,9 @@ const ImageUploader: React.FC = () => {
           }}
         >
           Crop Ulang
+        </Button>
+        <Button style={{ marginTop: "10px" }} onClick={onSave}>
+          Save
         </Button>
       </div>
     </div>
