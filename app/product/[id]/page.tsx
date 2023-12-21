@@ -16,22 +16,50 @@ import {
 } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 
+type AnggotaProps = {
+  id: string;
+  nama: string;
+  alamat: string;
+  nomorAnggota: number;
+  no_telp: number;
+  angkatan: number;
+};
+
 const ProductDetails = ({ params }: { params: { id: string } }) => {
-  const { handleSubmit, register } = useForm<ProductProps>({});
+  const { register, handleSubmit, getValues } = useForm<AnggotaProps>();
   const [product, setProduct] = useState<ProductProps | null>(null);
+  const [bisaPesan, setBisaPesan] = useState<boolean>(false);
+  const [anggota, setAnggota] = useState<AnggotaProps | null>(null);
 
   useEffect(() => {
     axios.get(`/api/product/${params.id}`).then((res) => {
       setProduct(res.data.products);
-      console.log(res.data.products);
     });
   }, [params.id]); // Include params.id as a dependency
+
+  const cekAnggota = () => {
+    setBisaPesan(false);
+    const nomorAnggotaValue = getValues("nomorAnggota");
+
+    axios.get(`/api/anggota/${nomorAnggotaValue}`).then((res) => {
+      if (res.data.anggota) {
+        setAnggota(res.data.anggota);
+        setBisaPesan(true);
+      } else {
+        setAnggota(null);
+        setBisaPesan(false);
+      }
+    });
+  };
+
+  const handlePesan = () => {};
 
   return (
     <>
       <Navbar />
-      <div className="flex mx-14 my-5 bg-gray-200 border px-2 py-2 rounded-xl">
-        <div className="w-1/2 bg-red-100 flex flex-col items-center">
+      <div className="flex mx-14 my-5 bg-gray-200 border px-8 py-8 rounded-xl shadow-2xl shadow-grey-500">
+        {/* Kiri */}
+        <div className="w-1/2  flex flex-col items-center">
           {product && (
             <div>
               <Image
@@ -45,26 +73,80 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
               <p>Name: {product.name}</p>
               <p>Description: {product.description}</p>
               <p>Price: {product.price}</p>
-              <p>Image: {product.image}</p>
             </div>
           )}
         </div>
+        {/* Kanan */}
+        <div className="bg-slate-300 rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
+          <p className="text-center pt-4 text-2xl">Peminjam</p>
+          <div className="flex flex-row items-center justify-between ">
+            <p className="mr-2">Nomor Anggota</p>
+            <TextField.Root>
+              <TextField.Input
+                placeholder="Nomor Anggota"
+                style={{ width: 190 }}
+                {...register("nomorAnggota")}
+              />
+              <Button className="px-1 py-1 relative" onClick={cekAnggota}>
+                Cek Anggota
+              </Button>
+            </TextField.Root>
+          </div>
+          {/* Detail anggota */}
+          <div hidden={bisaPesan ? false : true}>
+            <div className="flex flex-row items-center justify-between">
+              <p>Nama</p>
+              <TextField.Input
+                disabled
+                defaultValue={anggota?.nama}
+                style={{ width: 300 }}
+              />
+            </div>
+            <div className="flex flex-row items-center justify-between">
+              <p>Alamat</p>
+              <TextField.Input
+                defaultValue={anggota?.alamat}
+                disabled
+                style={{ width: 300 }}
+              />
+            </div>
+            <div className="flex flex-row items-center justify-between">
+              <p>No Telp</p>
+              <TextField.Input
+                disabled
+                defaultValue={anggota?.no_telp}
+                style={{ width: 300 }}
+              />
+            </div>
+            <div className="flex flex-row items-center justify-between">
+              <p>Angkatan</p>
+              <TextField.Input
+                disabled
+                defaultValue={anggota?.angkatan}
+                style={{ width: 300 }}
+              />
+            </div>
+          </div>
+          {/* SEWA */}
+          <p className="text-center pt-4 text-xl">Detail Sewa</p>
+          <div className="flex flex-row items-center justify-between">
+            <p>Barang</p>
+            <TextField.Input
+              disabled
+              defaultValue={product?.name}
+              style={{ width: 300 }}
+            />
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <p>Harga</p>
+            <TextField.Input
+              disabled
+              defaultValue={product?.price}
+              style={{ width: 300 }}
+            />
+          </div>
 
-        <div className="w-1/2 bg-blue-100 flex flex-col justify-center items-center">
-          <div className="flex flex-row items-center">
-            <label className="mr-2">Nama</label>
-            <TextField.Input
-              placeholder="Nama"
-              {...register("name", { required: "Name is required" })}
-            />
-          </div>
-          <div className="flex flex-row items-center">
-            <label className="mr-2">Alamat</label>
-            <TextField.Input
-              placeholder="Alamat"
-              {...register("name", { required: "alamat is required" })}
-            />
-          </div>
+          <Button disabled={!bisaPesan}>Pesan</Button>
         </div>
       </div>
     </>
