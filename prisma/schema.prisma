@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
   name      String?
   password  String
-  alamat    String?
-  isAdmin   Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Sewa Sewa[]
 }
 
 model Product {
@@ -30,24 +30,27 @@ model Product {
   image       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  Sewa        Sewa[]
 }
 
 model Sewa {
   id          Int      @id @default(autoincrement())
-  idBarang    Int
-  idUser      Int
-  nama        String
-  alamat      String
-  no_telp     Int
-  tgl_mulai   DateTime
+  productId   Int
+  product     Product  @relation(fields: [productId], references: [id])
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  tgl_mulai   DateTime @default(now())
   tgl_selesai DateTime
-  createdAt   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   // statusBarang String
 }
 
 model Anggota {
   id           Int    @id @default(autoincrement())
   nama         String
-  nomorAnggota Int    @unique
+  nomorAnggota BigInt @unique
   angkatan     Int
+  alamat       String
+  no_telp      BigInt
 }

@@ -52,7 +52,9 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
     });
   };
 
-  const handlePesan = () => {};
+  const handlePesan = () => {
+    axios.post(`/api/sewa`), {};
+  };
 
   return (
     <>
@@ -78,7 +80,9 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
         </div>
         {/* Kanan */}
         <div className="bg-slate-300 rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
-          <p className="text-center pt-4 text-2xl">Peminjam</p>
+          <p className="text-center mt-4 mb-8 text-2xl bg-orange-600 items-center rounded-md text-white py-2">
+            Pinjam Barang
+          </p>
           <div className="flex flex-row items-center justify-between ">
             <p className="mr-2">Nomor Anggota</p>
             <TextField.Root>
@@ -146,7 +150,9 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
             />
           </div>
 
-          <Button disabled={!bisaPesan}>Pesan</Button>
+          <Button disabled={!bisaPesan} onClick={handlePesan}>
+            Pesan
+          </Button>
         </div>
       </div>
     </>

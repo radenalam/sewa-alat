@@ -5,3 +5,11 @@ export interface ProductProps {
   price: number;
   image: string | null;
 }
+
+export interface SewaProps {
+  id: number;
+  productId: number;
+  userId: number;
+  tgl_mulai: Date;
+  tgl_selesai: Date;
+}

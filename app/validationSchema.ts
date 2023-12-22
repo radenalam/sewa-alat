@@ -6,3 +6,10 @@ export const createProductSchema = z.object({
   price: z.number().min(1, "Harga harus di isi."),
   image: z.string().nullable(),
 });
+
+export const Sewa = z.object({
+  productId: z.number().min(1, "Produk harus dipilih."),
+  userId: z.number().min(1, "User harus dipilih."),
+  tgl_mulai: z.date().or(z.string()),
+  tgl_selesai: z.date().or(z.string()),
+});
