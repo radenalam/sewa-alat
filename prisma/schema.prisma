@@ -18,8 +18,6 @@ model User {
   isAdmin   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  Sewa Sewa[]
 }
 
 model Product {
@@ -37,8 +35,8 @@ model Sewa {
   id          Int      @id @default(autoincrement())
   productId   Int
   product     Product  @relation(fields: [productId], references: [id])
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
+  anggotaId   Int
+  anggota     Anggota  @relation(fields: [anggotaId], references: [id])
   tgl_mulai   DateTime @default(now())
   tgl_selesai DateTime
   createdAt   DateTime @default(now())
@@ -49,8 +47,9 @@ model Sewa {
 model Anggota {
   id           Int    @id @default(autoincrement())
   nama         String
-  nomorAnggota BigInt @unique
+  nomorAnggota Int    @unique
   angkatan     Int
   alamat       String
-  no_telp      BigInt
+  no_telp      Int
+  Sewa         Sewa[]
 }

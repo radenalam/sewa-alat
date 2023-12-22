@@ -44,16 +44,23 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
     axios.get(`/api/anggota/${nomorAnggotaValue}`).then((res) => {
       if (res.data.anggota) {
         setAnggota(res.data.anggota);
+        console.log(anggota);
         setBisaPesan(true);
       } else {
-        setAnggota(null);
         setBisaPesan(false);
       }
     });
   };
 
   const handlePesan = () => {
-    axios.post(`/api/sewa`), {};
+    console.log(anggota?.id);
+    console.log(product?.id);
+    // buat variable anggota dan product
+    axios.post("/api/sewa", anggota).then((res) => {
+      if (res.status === 201) {
+        console.log(res.data);
+      }
+    });
   };
 
   return (
@@ -149,8 +156,16 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
               style={{ width: 300 }}
             />
           </div>
+          <div className="flex flex-row items-center justify-between">
+            <p>Tanggal Mulai</p>
+            <TextField.Input style={{ width: 300 }} />
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <p>Tanggal Selesai</p>
+            <TextField.Input style={{ width: 300 }} />
+          </div>
 
-          <Button disabled={!bisaPesan} onClick={handlePesan}>
+          <Button disabled={!bisaPesan} onClick={handleSubmit(handlePesan)}>
             Pesan
           </Button>
         </div>
