@@ -5,16 +5,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ProductProps } from "@/types/index";
 import Image from "next/image";
-import {
-  Box,
-  Button,
-  Dialog,
-  Flex,
-  Tabs,
-  TextArea,
-  TextField,
-} from "@radix-ui/themes";
+import { TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
+
+import { format } from "date-fns";
+import { FaCalendarMinus } from "react-icons/fa";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
 
 type AnggotaProps = {
   id: string;
@@ -28,8 +33,10 @@ type AnggotaProps = {
 const ProductDetails = ({ params }: { params: { id: string } }) => {
   const { register, handleSubmit, getValues } = useForm<AnggotaProps>();
   const [product, setProduct] = useState<ProductProps | null>(null);
-  const [bisaPesan, setBisaPesan] = useState<boolean>(false);
   const [anggota, setAnggota] = useState<AnggotaProps | null>(null);
+  const [bisaPesan, setBisaPesan] = useState<boolean>(false);
+  const [dateStart, setDateStart] = React.useState<Date>();
+  const [dateEnd, setDateEnd] = React.useState<Date>();
 
   useEffect(() => {
     axios.get(`/api/product/${params.id}`).then((res) => {
@@ -53,10 +60,16 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const handlePesan = () => {
-    console.log(anggota?.id);
-    console.log(product?.id);
+    // Membuat objek yang berisi data yang akan dikirim
+    const requestData = {
+      anggotaId: anggota?.id,
+      productId: product?.id,
+      tgl_mulai: dateStart,
+      tgl_selesai: dateEnd,
+    };
+
     // buat variable anggota dan product
-    axios.post("/api/sewa", anggota).then((res) => {
+    axios.post("/api/sewa", requestData).then((res) => {
       if (res.status === 201) {
         console.log(res.data);
       }
@@ -87,85 +100,141 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
         </div>
         {/* Kanan */}
         <div className="bg-slate-300 rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
-          <p className="text-center mt-4 mb-8 text-2xl bg-orange-600 items-center rounded-md text-white py-2">
+          <p className="text-center mt-4 mb-8 text-2xl bg-gray-700 items-center rounded-md text-white py-2">
             Pinjam Barang
           </p>
           <div className="flex flex-row items-center justify-between ">
             <p className="mr-2">Nomor Anggota</p>
-            <TextField.Root>
-              <TextField.Input
+            <div className="flex w-full max-w-sm items-center space-x-2">
+              <Input
                 placeholder="Nomor Anggota"
-                style={{ width: 190 }}
                 {...register("nomorAnggota")}
+                className="bg-white"
               />
-              <Button className="px-1 py-1 relative" onClick={cekAnggota}>
+              <Button className="bg-gray-700" onClick={cekAnggota}>
                 Cek Anggota
               </Button>
-            </TextField.Root>
+            </div>
           </div>
+
           {/* Detail anggota */}
-          <div hidden={bisaPesan ? false : true}>
+          <div
+            hidden={bisaPesan ? false : true}
+            className="flex flex-col gap-3"
+          >
             <div className="flex flex-row items-center justify-between">
               <p>Nama</p>
-              <TextField.Input
+              <Input
+                className="bg-white w-80"
                 disabled
                 defaultValue={anggota?.nama}
-                style={{ width: 300 }}
               />
             </div>
             <div className="flex flex-row items-center justify-between">
               <p>Alamat</p>
-              <TextField.Input
+              <Input
                 defaultValue={anggota?.alamat}
                 disabled
-                style={{ width: 300 }}
+                className="bg-white w-80"
               />
             </div>
             <div className="flex flex-row items-center justify-between">
               <p>No Telp</p>
-              <TextField.Input
+              <Input
                 disabled
                 defaultValue={anggota?.no_telp}
-                style={{ width: 300 }}
+                className="bg-white w-80"
               />
             </div>
             <div className="flex flex-row items-center justify-between">
               <p>Angkatan</p>
-              <TextField.Input
+              <Input
                 disabled
                 defaultValue={anggota?.angkatan}
-                style={{ width: 300 }}
+                className="bg-white w-80"
               />
             </div>
           </div>
+
           {/* SEWA */}
           <p className="text-center pt-4 text-xl">Detail Sewa</p>
           <div className="flex flex-row items-center justify-between">
             <p>Barang</p>
-            <TextField.Input
+            <Input
               disabled
               defaultValue={product?.name}
-              style={{ width: 300 }}
+              className="bg-white w-80"
             />
           </div>
           <div className="flex flex-row items-center justify-between">
             <p>Harga</p>
-            <TextField.Input
+            <Input
               disabled
               defaultValue={product?.price}
-              style={{ width: 300 }}
+              className="bg-white w-80"
             />
           </div>
           <div className="flex flex-row items-center justify-between">
             <p>Tanggal Mulai</p>
-            <TextField.Input style={{ width: 300 }} />
-          </div>
-          <div className="flex flex-row items-center justify-between">
-            <p>Tanggal Selesai</p>
-            <TextField.Input style={{ width: 300 }} />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    " justify-start text-left font-normal bg-white w-80",
+                    !dateStart && "text-muted-foreground"
+                  )}
+                >
+                  <FaCalendarMinus className="mr-2 h-4 w-4" />
+                  {dateStart ? (
+                    format(dateStart, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={dateStart}
+                  onSelect={setDateStart}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
-          <Button disabled={!bisaPesan} onClick={handleSubmit(handlePesan)}>
+          <div className="flex flex-row items-center justify-between">
+            <p>Tanggal Selesai</p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    " justify-start text-left font-normal bg-white w-80",
+                    !dateEnd && "text-muted-foreground"
+                  )}
+                >
+                  <FaCalendarMinus className="mr-2 h-4 w-4" />
+                  {dateEnd ? format(dateEnd, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={dateEnd}
+                  onSelect={setDateEnd}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          <Button
+            className="bg-gray-700"
+            disabled={!bisaPesan}
+            onClick={handleSubmit(handlePesan)}
+          >
             Pesan
           </Button>
         </div>

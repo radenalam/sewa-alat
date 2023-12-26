@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { Button, Strong } from "@radix-ui/themes";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 const ImageUploader: React.FC = () => {
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -71,7 +71,7 @@ const ImageUploader: React.FC = () => {
 
       {/* Hasil Crop */}
       <div hidden={croppedImageHide} className="border my-2 m-auto">
-        <Strong>Cropped Image</Strong>
+        <p>Cropped Image</p>
         <img
           src={croppedImage}
           alt="cropped image"

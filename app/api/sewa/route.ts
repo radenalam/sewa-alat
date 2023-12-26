@@ -23,3 +23,8 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(newSewa, { status: 201 });
 }
+
+export async function GET() {
+  const sewa = await prisma.sewa.findMany();
+  return NextResponse.json(sewa, { status: 200 });
+}

@@ -1,6 +1,6 @@
 // components/HeroSection.js
 import React from "react";
-import { Button } from "@radix-ui/themes";
+import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   return (
@@ -15,9 +15,8 @@ const HeroSection = () => {
             process.
           </p>
           <Button
-            size="3"
             color="orange"
-            className="bg-white text-blue-500 px-4 py-2 rounded-full font-medium  shadow-md transition duration-300 hover:bg-blue-500 hover:text-white mt-4"
+            className="bg-white text-blue-500 px-4 py-2 rounded-md font-medium  shadow-md transition duration-300 hover:bg-blue-500 hover:text-white mt-4"
           >
             Explore
           </Button>

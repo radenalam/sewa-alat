@@ -1,10 +1,27 @@
 "use client";
 
 import DropdownAction from "@/components/DropdownAction";
+import { SewaProps } from "@/types";
 import { Badge, Table } from "@radix-ui/themes";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const PengambilanPage = () => {
+  const [sewa, setSewa] = useState<SewaProps[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/sewa")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setSewa(response.data);
+        } else {
+          console.error("Invalid response data format:", response.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching projects:", error));
+  }, []);
+
   return (
     <div className="mx-6 my-6">
       <Table.Root variant="surface">
@@ -15,53 +32,22 @@ const PengambilanPage = () => {
             <Table.ColumnHeaderCell>Peminjam</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>Tanggal Mulai</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>Tanggal Selesai</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.RowHeaderCell>1</Table.RowHeaderCell>
-            <Table.Cell>Canon 600D</Table.Cell>
-            <Table.Cell>Alam Sanjaya</Table.Cell>
-            <Table.Cell>21 Desember 2023</Table.Cell>
-            <Table.Cell>25 Desember 2023</Table.Cell>
-            <Table.Cell>
-              <Badge color="green">Belum diambil</Badge>
-            </Table.Cell>
-            <Table.Cell>
-              <DropdownAction />
-            </Table.Cell>
-          </Table.Row>
+          {sewa.map((sewa, i) => (
+            <Table.Row align="center" key={i}>
+              <Table.RowHeaderCell width={50}>{sewa.id}</Table.RowHeaderCell>
+              <Table.Cell>{sewa.productId}</Table.Cell>
+              <Table.Cell>{sewa.anggotaId}</Table.Cell>
+              <Table.Cell>{sewa?.tgl_mulai.toString()}</Table.Cell>
+              <Table.Cell>{sewa?.tgl_selesai.toString()}</Table.Cell>
 
-          <Table.Row align={"center"}>
-            <Table.RowHeaderCell>2</Table.RowHeaderCell>
-            <Table.Cell>Sony A6000</Table.Cell>
-            <Table.Cell>Raihan Azka</Table.Cell>
-            <Table.Cell>21 Desember 2023</Table.Cell>
-            <Table.Cell>25 Desember 2023</Table.Cell>
-            <Table.Cell>
-              <Badge color="blue">Sedang Dipinjam</Badge>
-            </Table.Cell>
-            <Table.Cell>
-              <DropdownAction />
-            </Table.Cell>
-          </Table.Row>
-
-          <Table.Row align={"center"}>
-            <Table.RowHeaderCell>3</Table.RowHeaderCell>
-            <Table.Cell>Canon 5D</Table.Cell>
-            <Table.Cell>Sanjaya</Table.Cell>
-            <Table.Cell>21 Desember 2023</Table.Cell>
-            <Table.Cell>25 Desember 2023</Table.Cell>
-            <Table.Cell>
-              <Badge color="red">Belum dikembalikan</Badge>
-            </Table.Cell>
-            <Table.Cell>
-              <DropdownAction />
-            </Table.Cell>
-          </Table.Row>
+              <Table.Cell align="right"></Table.Cell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table.Root>
     </div>

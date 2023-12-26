@@ -2,11 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { BsBugFill } from "react-icons/bs";
 import { usePathname } from "next/navigation";
-import classnames from "classnames";
 import Image from "next/image";
-import { Button } from "@radix-ui/themes";
 
 const Navbar = () => {
   const currentPath = usePathname();

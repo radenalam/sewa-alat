@@ -9,7 +9,7 @@ export interface ProductProps {
 export interface SewaProps {
   id: number;
   productId: number;
-  userId: number;
+  anggotaId: number;
   tgl_mulai: Date;
   tgl_selesai: Date;
 }
