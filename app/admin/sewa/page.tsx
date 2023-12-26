@@ -1,8 +1,15 @@
 "use client";
 
-import DropdownAction from "@/components/DropdownAction";
 import { SewaProps } from "@/types";
-import { Badge, Table } from "@radix-ui/themes";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -23,33 +30,33 @@ const PengambilanPage = () => {
   }, []);
 
   return (
-    <div className="mx-6 my-6">
-      <Table.Root variant="surface">
-        <Table.Header>
-          <Table.Row align={"center"}>
-            <Table.ColumnHeaderCell>ID</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Barang</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Peminjam</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Tanggal Mulai</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Tanggal Selesai</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <div className="mx-6 my-6 border rounded-xl shadow-sm">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>ID</TableHead>
+            <TableHead>Barang</TableHead>
+            <TableHead>Peminjam</TableHead>
+            <TableHead>Tanggal Mulai</TableHead>
+            <TableHead>Tanggal Selesai</TableHead>
+            <TableHead>Action</TableHead>
+          </TableRow>
+        </TableHeader>
 
-        <Table.Body>
+        <TableBody>
           {sewa.map((sewa, i) => (
-            <Table.Row align="center" key={i}>
-              <Table.RowHeaderCell width={50}>{sewa.id}</Table.RowHeaderCell>
-              <Table.Cell>{sewa.productId}</Table.Cell>
-              <Table.Cell>{sewa.anggotaId}</Table.Cell>
-              <Table.Cell>{sewa?.tgl_mulai.toString()}</Table.Cell>
-              <Table.Cell>{sewa?.tgl_selesai.toString()}</Table.Cell>
+            <TableRow key={i}>
+              <TableCell width={50}>{sewa.id}</TableCell>
+              <TableCell>{sewa.productId}</TableCell>
+              <TableCell>{sewa.anggotaId}</TableCell>
+              <TableCell>{sewa?.tgl_mulai.toString()}</TableCell>
+              <TableCell>{sewa?.tgl_selesai.toString()}</TableCell>
 
-              <Table.Cell align="right"></Table.Cell>
-            </Table.Row>
+              <TableCell align="right"></TableCell>
+            </TableRow>
           ))}
-        </Table.Body>
-      </Table.Root>
+        </TableBody>
+      </Table>
     </div>
   );
 };

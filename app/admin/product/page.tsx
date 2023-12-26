@@ -2,14 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  AlertDialog,
-  Button,
-  Container,
-  Flex,
-  IconButton,
-  Link,
   Table,
-} from "@radix-ui/themes";
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 import axios from "axios";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import EditProductForm from "@/components/EditProductForm";
@@ -40,50 +41,44 @@ const productPage = () => {
         <AddProductForm />
       </div>
       <div className="px-4 py-4">
-        <Table.Root variant="surface">
-          <Table.Header>
-            <Table.Row align={"center"}>
-              <Table.ColumnHeaderCell>ID</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Nama Barang</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Deskripsi</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Harga</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell justify={"center"}>
-                Image
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell width={100} justify={"end"}>
-                Action
-              </Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Nama Barang</TableHead>
+              <TableHead>Deskripsi</TableHead>
+              <TableHead>Harga</TableHead>
+              <TableHead>Image</TableHead>
+              <TableHead>Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {product.map((product, i) => (
-              <Table.Row align="center" key={i}>
-                <Table.RowHeaderCell width={50}>
-                  {product.id}
-                </Table.RowHeaderCell>
-                <Table.Cell>{product.name}</Table.Cell>
-                <Table.Cell>{product.description}</Table.Cell>
-                <Table.Cell>{product.price}</Table.Cell>
+              <TableRow key={i}>
+                <TableCell width={50}>{product.id}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.description}</TableCell>
+                <TableCell>{product.price}</TableCell>
 
-                <Table.Cell align="center">
+                <TableCell align="center">
                   <Image
                     src={product.image ?? "/default_camera.png"}
                     alt={product.name}
                     width={50}
                     height={50}
                   />
-                </Table.Cell>
+                </TableCell>
 
-                <Table.Cell align="right">
+                <TableCell align="right">
                   <div className="float-right space-x-0.5 flex flex-row">
                     <EditProductForm product={product} />
                     <DeleteProductForm product={product} />
                   </div>
-                </Table.Cell>
-              </Table.Row>
+                </TableCell>
+              </TableRow>
             ))}
-          </Table.Body>
-        </Table.Root>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

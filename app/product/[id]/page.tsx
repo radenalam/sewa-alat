@@ -5,7 +5,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ProductProps } from "@/types/index";
 import Image from "next/image";
-import { TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 
 import { format } from "date-fns";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@radix-ui/themes";
+import { Button } from "./ui/button";
 import React, { useState } from "react";
 
 const ProductCard = () => {

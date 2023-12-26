@@ -1,29 +1,38 @@
-import { Table } from "@radix-ui/themes";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 import React from "react";
 
 const AnggotaPage = () => {
   return (
-    <div className="mx-6 my-6">
-      <Table.Root variant="surface">
-        <Table.Header>
-          <Table.Row align={"center"}>
-            <Table.ColumnHeaderCell>ID</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Nama</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>No Anggota</Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <div className="mx-6 my-6 border rounded-xl shadow-sm">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>ID</TableHead>
+            <TableHead>Nama</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>No Anggota</TableHead>
+          </TableRow>
+        </TableHeader>
 
-        <Table.Body>
-          <Table.Row align={"center"}>
-            <Table.RowHeaderCell>1</Table.RowHeaderCell>
-            <Table.Cell>Alam Sanjaya</Table.Cell>
+        <TableBody>
+          <TableRow>
+            <TableCell>1</TableCell>
+            <TableCell>Alam Sanjaya</TableCell>
 
-            <Table.Cell>raden@gmail.com</Table.Cell>
-            <Table.Cell>2013055168</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table.Root>
+            <TableCell>raden@gmail.com</TableCell>
+            <TableCell>2013055168</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </div>
   );
 };

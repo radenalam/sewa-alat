@@ -2,12 +2,20 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ProductProps } from "@/types";
-import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import axios from "axios";
 import ImageUploader from "@/components/ImageUploader";
 
 type AddProductFormProps = {
-  // onSubmit: SubmitHandler<ProductProps>;
   product?: ProductProps;
 };
 
@@ -35,48 +43,31 @@ const ProductForm = () => {
 
   return (
     <div>
-      <Dialog.Root>
-        <Dialog.Trigger>
-          <Button>Tambah Barang</Button>
-        </Dialog.Trigger>
+      <Dialog>
+        <DialogTrigger className="textwhite bg-slate-500 px-3 py-2 rounded-md">
+          Tambah Barang
+        </DialogTrigger>
 
-        <Dialog.Content style={{ maxWidth: 450 }}>
-          <Dialog.Title>Tambah Barang</Dialog.Title>
-          <Dialog.Description size="2" mb="4">
-            Masukan data produk
-          </Dialog.Description>
+        <DialogContent style={{ maxWidth: 450 }}>
+          <DialogTitle>Tambah Barang</DialogTitle>
+          <DialogDescription>Masukan data produk</DialogDescription>
 
-          <Flex direction="column" gap="3">
-            <TextField.Input
-              mb="1"
+          <div className="flex flex-col gap-3">
+            <Input
               placeholder="Title"
               {...register("name", { required: "Title is required" })}
             />
-            <TextArea
-              mb="1"
-              placeholder="Description"
-              {...register("description")}
-            />
-            <TextField.Input
-              mb="1"
+            <Input placeholder="Description" {...register("description")} />
+            <Input
               placeholder="Price"
               {...register("price", { required: "Price is required" })}
             />
             <ImageUploader />
-          </Flex>
+          </div>
 
-          <Flex gap="3" mt="4" justify="end">
-            <Dialog.Close>
-              <Button variant="soft" color="gray">
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button onClick={handleSubmit(onSubmit)}>Save</Button>
-            </Dialog.Close>
-          </Flex>
-        </Dialog.Content>
-      </Dialog.Root>
+          <Button onClick={handleSubmit(onSubmit)}>Save</Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

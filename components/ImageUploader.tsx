@@ -80,7 +80,6 @@ const ImageUploader: React.FC = () => {
           style={{ margin: "auto" }}
         />
         <Button
-          style={{ marginTop: "10px" }}
           onClick={() => {
             setCropperHide(false);
             setCroppedImageHide(true);
