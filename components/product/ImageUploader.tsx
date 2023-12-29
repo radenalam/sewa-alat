@@ -30,15 +30,24 @@ const ImageUploader = ({ uploadSelesai }: any) => {
     }
   };
 
-  const onSave = async () => {
+  const onSave = () => {
     if (croppedImage) {
       const file = dataURItoFile(croppedImage, "katalog.png");
       const formData = new FormData();
       formData.append("foto_katalog", file);
 
-      const res = await axios.post("/api/image", formData);
-
-      uploadSelesai(res.data?.filename);
+      axios
+        .post("/api/image", formData)
+        .then((res) => {
+          if (res.status === 201) {
+            uploadSelesai(res.data?.filename);
+          } else {
+            console.error("Image upload failed:", res);
+          }
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
     }
   };
 
