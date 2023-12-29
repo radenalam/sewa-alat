@@ -3,6 +3,7 @@ import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { Input } from "../ui/input";
 
 const ImageUploader: React.FC = () => {
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -43,7 +44,7 @@ const ImageUploader: React.FC = () => {
     <div>
       {/* Upload Image Button */}
       <div>
-        <input
+        <Input
           type="file"
           className="formControl"
           id="formFile"
@@ -70,7 +71,7 @@ const ImageUploader: React.FC = () => {
       </div>
 
       {/* Hasil Crop */}
-      <div hidden={croppedImageHide} className="border my-2 m-auto">
+      <div hidden={croppedImageHide} className=" my-2 m-auto">
         <p>Cropped Image</p>
         <img
           src={croppedImage}
@@ -79,17 +80,20 @@ const ImageUploader: React.FC = () => {
           height={250}
           style={{ margin: "auto" }}
         />
-        <Button
-          onClick={() => {
-            setCropperHide(false);
-            setCroppedImageHide(true);
-          }}
-        >
-          Crop Ulang
-        </Button>
-        <Button style={{ marginTop: "10px" }} onClick={onSave}>
-          Save
-        </Button>
+        <div className="flex justify-end gap-3">
+          <Button
+            className="bg-red-600"
+            onClick={() => {
+              setCropperHide(false);
+              setCroppedImageHide(true);
+            }}
+          >
+            Crop Ulang
+          </Button>
+          <Button className="bg-green-600 " onClick={onSave}>
+            Save
+          </Button>
+        </div>
       </div>
     </div>
   );

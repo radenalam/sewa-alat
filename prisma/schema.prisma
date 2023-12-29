@@ -37,7 +37,7 @@ model Sewa {
   product     Product  @relation(fields: [productId], references: [id])
   anggotaId   Int
   anggota     Anggota  @relation(fields: [anggotaId], references: [id])
-  tgl_mulai   DateTime @default(now())
+  tgl_mulai   DateTime
   tgl_selesai DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

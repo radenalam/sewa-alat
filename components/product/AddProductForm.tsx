@@ -13,13 +13,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
-import ImageUploader from "@/components/ImageUploader";
+import ImageUploader from "@/components/product/ImageUploader";
 
 type AddProductFormProps = {
   product?: ProductProps;
 };
 
-const ProductForm = () => {
+const ProductForm = (product: AddProductFormProps) => {
   const { handleSubmit, register } = useForm<ProductProps>({});
 
   const onSubmit = (product: ProductProps) => {

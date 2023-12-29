@@ -13,9 +13,9 @@ import {
 
 import axios from "axios";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
-import EditProductForm from "@/components/EditProductForm";
-import AddProductForm from "@/components/AddProductForm";
-import DeleteProductForm from "@/components/DeleteProductForm";
+import EditProductForm from "@/components/product/EditProductForm";
+import AddProductForm from "@/components/product/AddProductForm";
+import DeleteProductForm from "@/components/product/DeleteProductForm";
 import { ProductProps } from "@/types/index";
 import Image from "next/image";
 

@@ -7,9 +7,6 @@ export async function POST(req: NextRequest) {
 
   console.log("Received data:", body);
 
-  // tgl_mulai: '2023-12-22T12:30:00.000Z',
-  //   tgl_selesai: '2023-12-23T15:45:00.000Z'
-
   const validation = Sewa.safeParse(body);
 
   if (!validation.success) {

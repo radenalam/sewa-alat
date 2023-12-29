@@ -2,12 +2,12 @@
 
 import Navbar from "@/components/Navbar";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ProductProps } from "@/types/index";
+import { useEffect, useState } from "react";
+import { ProductProps, SewaProps } from "@/types/index";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import { FaCalendarMinus } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
@@ -19,6 +19,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
+import moment from "moment";
+import { Sewa } from "@prisma/client";
 
 type AnggotaProps = {
   id: string;
@@ -34,8 +36,43 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
   const [product, setProduct] = useState<ProductProps | null>(null);
   const [anggota, setAnggota] = useState<AnggotaProps | null>(null);
   const [bisaPesan, setBisaPesan] = useState<boolean>(false);
-  const [dateStart, setDateStart] = React.useState<Date>();
-  const [dateEnd, setDateEnd] = React.useState<Date>();
+  const [dateStart, setDateStart] = useState<Date>();
+  const [dateEnd, setDateEnd] = useState<Date>();
+  const [datesBooked, setDatesBooked] = useState([]);
+
+  useEffect(() => {
+    axios.get("/api/sewa").then((res) => {
+      const datesBooked = res.data.reduce((acc: any, sewa: SewaProps) => {
+        const start = new Date(sewa.tgl_mulai);
+        const end = new Date(sewa.tgl_selesai);
+
+        // Menambahkan setiap tanggal dalam rentang ke dalam array
+        const rangeDates = [];
+        let currentDate = new Date(start);
+
+        while (currentDate <= end) {
+          rangeDates.push(new Date(currentDate));
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        return [...acc, ...rangeDates];
+      }, []);
+
+      console.log(datesBooked);
+      setDatesBooked(datesBooked);
+    });
+  }, []);
+
+  const isDateDisabled = (date: Date) => {
+    // Menonaktifkan hari sebelum hari ini
+    const today = new Date();
+    if (date < today && !isSameDay(date, today)) {
+      return true;
+    }
+
+    // Menonaktifkan hari yang sudah tersewa
+    return datesBooked.some((bookedDate) => isSameDay(date, bookedDate));
+  };
 
   useEffect(() => {
     axios.get(`/api/product/${params.id}`).then((res) => {
@@ -59,15 +96,15 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const handlePesan = () => {
-    // Membuat objek yang berisi data yang akan dikirim
+    console.log(moment(dateStart).format());
+
     const requestData = {
       anggotaId: anggota?.id,
       productId: product?.id,
-      tgl_mulai: dateStart,
-      tgl_selesai: dateEnd,
+      tgl_mulai: moment(dateStart).utcOffset(0, true).format(),
+      tgl_selesai: moment(dateEnd).utcOffset(0, true).format(),
     };
 
-    // buat variable anggota dan product
     axios.post("/api/sewa", requestData).then((res) => {
       if (res.status === 201) {
         console.log(res.data);
@@ -198,6 +235,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
                   selected={dateStart}
                   onSelect={setDateStart}
                   initialFocus
+                  disabled={isDateDisabled}
                 />
               </PopoverContent>
             </Popover>
@@ -224,6 +262,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
                   selected={dateEnd}
                   onSelect={setDateEnd}
                   initialFocus
+                  disabled={isDateDisabled}
                 />
               </PopoverContent>
             </Popover>

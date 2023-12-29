@@ -14,7 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 type DeleteProductFormProps = {
   product?: ProductProps;
