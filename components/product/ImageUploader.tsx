@@ -4,10 +4,10 @@ import "cropperjs/dist/cropper.css";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
+import { dataURItoFile } from "@/app/helper";
 
-const ImageUploader: React.FC = () => {
+const ImageUploader = ({ uploadSelesai }: any) => {
   const cropperRef = useRef<ReactCropperElement>(null);
-
   const [uploadedImage, setUploadedImage] = useState<string>("");
   const [cropperHide, setCropperHide] = useState<boolean>(true);
   const [croppedImageHide, setCroppedImageHide] = useState<boolean>(true);
@@ -30,13 +30,15 @@ const ImageUploader: React.FC = () => {
     }
   };
 
-  const onSave = () => {
+  const onSave = async () => {
     if (croppedImage) {
+      const file = dataURItoFile(croppedImage, "katalog.png");
       const formData = new FormData();
-      formData.append("image", croppedImage);
-      axios.post("/api/image", formData).then((res) => {
-        console.log(res.data);
-      });
+      formData.append("foto_katalog", file);
+
+      const res = await axios.post("/api/image", formData);
+
+      uploadSelesai(res.data?.filename);
     }
   };
 

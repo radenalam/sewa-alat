@@ -61,8 +61,12 @@ const productPage = () => {
                 <TableCell>{product.price}</TableCell>
 
                 <TableCell align="center">
-                  <Image
-                    src={product.image ?? "/default_camera.png"}
+                  <img
+                    src={
+                      product.image
+                        ? `/uploads/${product.image}`
+                        : "/default_camera.png"
+                    }
                     alt={product.name}
                     width={50}
                     height={50}

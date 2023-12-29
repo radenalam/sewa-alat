@@ -14,14 +14,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import ImageUploader from "@/components/product/ImageUploader";
+import { useState } from "react";
 
 type AddProductFormProps = {
   product?: ProductProps;
 };
 
 const ProductForm = (product: AddProductFormProps) => {
-  const { handleSubmit, register } = useForm<ProductProps>({});
+  const { handleSubmit, register, setValue } = useForm<ProductProps>({});
+  const [fileName, setFileName] = useState<string>("");
 
+  const handleImageUploadComplete = (filename: any) => {
+    setFileName(filename);
+
+    // Juga, jika perlu, Anda dapat menambahkannya ke dalam nilai form
+    setValue("image", filename);
+  };
   const onSubmit = (product: ProductProps) => {
     product.price = Number(product.price);
     if (!product.image) {
@@ -30,6 +38,9 @@ const ProductForm = (product: AddProductFormProps) => {
     if (!product.description) {
       product.description = null;
     }
+    product.image = `/${fileName}`;
+
+    console.log(product.image);
     axios
       .post("/api/product", product)
       .then((response) => {
@@ -44,10 +55,10 @@ const ProductForm = (product: AddProductFormProps) => {
   return (
     <div>
       <Dialog>
-        <DialogTrigger className="textwhite bg-slate-500 px-3 py-2 rounded-md">
+        {" "}
+        <DialogTrigger className="text-white bg-slate-500 px-3 py-2 rounded-md">
           Tambah Barang
         </DialogTrigger>
-
         <DialogContent style={{ maxWidth: 450 }}>
           <DialogTitle>Tambah Barang</DialogTitle>
           <DialogDescription>Masukan data produk</DialogDescription>
@@ -62,7 +73,7 @@ const ProductForm = (product: AddProductFormProps) => {
               placeholder="Price"
               {...register("price", { required: "Price is required" })}
             />
-            <ImageUploader />
+            <ImageUploader uploadSelesai={handleImageUploadComplete} />
           </div>
 
           <Button onClick={handleSubmit(onSubmit)}>Save</Button>

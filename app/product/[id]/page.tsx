@@ -111,12 +111,16 @@ const ProductDetails = (
         <div className="w-1/2  flex flex-col items-center">
           {product && (
             <div>
-              <Image
-                className=""
-                src={product.image ?? "/default_camera.png"}
-                alt={product.name}
-                width={400}
-                height={400}
+              <img
+                src={
+                  product.image
+                    ? `/uploads/${product.image}`
+                    : "/default_camera.png"
+                }
+                alt="Product Image"
+                width={250}
+                height={250}
+                style={{ margin: "auto" }}
               />
 
               <p>Name: {product.name}</p>

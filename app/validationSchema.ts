@@ -13,3 +13,7 @@ export const Sewa = z.object({
   tgl_mulai: z.date().or(z.string()),
   tgl_selesai: z.date().or(z.string()),
 });
+
+export const UploadImage = z.object({
+  file: z.any().refine((file) => file !== null, "File harus di isi."),
+});
