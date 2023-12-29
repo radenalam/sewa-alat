@@ -7,7 +7,7 @@ import { ProductProps, SewaProps } from "@/types/index";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 
-import { format, isSameDay } from "date-fns";
+import { addDays, format, isSameDay } from "date-fns";
 import { FaCalendarMinus } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +21,8 @@ import {
 import { Input } from "@/components/ui/input";
 import moment from "moment";
 import { Sewa } from "@prisma/client";
+import { DateRange } from "react-day-picker";
+import { CalendarIcon } from "@radix-ui/react-icons";
 
 type AnggotaProps = {
   id: string;
@@ -31,14 +33,17 @@ type AnggotaProps = {
   angkatan: number;
 };
 
-const ProductDetails = ({ params }: { params: { id: string } }) => {
+const ProductDetails = (
+  { params }: { params: { id: string } },
+  { className }: React.HTMLAttributes<HTMLDivElement>
+) => {
   const { register, handleSubmit, getValues } = useForm<AnggotaProps>();
   const [product, setProduct] = useState<ProductProps | null>(null);
   const [anggota, setAnggota] = useState<AnggotaProps | null>(null);
   const [bisaPesan, setBisaPesan] = useState<boolean>(false);
-  const [dateStart, setDateStart] = useState<Date>();
-  const [dateEnd, setDateEnd] = useState<Date>();
+
   const [datesBooked, setDatesBooked] = useState([]);
+  const [date, setDate] = useState<DateRange | undefined>();
 
   useEffect(() => {
     axios.get("/api/sewa").then((res) => {
@@ -58,7 +63,6 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
         return [...acc, ...rangeDates];
       }, []);
 
-      console.log(datesBooked);
       setDatesBooked(datesBooked);
     });
   }, []);
@@ -96,13 +100,11 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const handlePesan = () => {
-    console.log(moment(dateStart).format());
-
     const requestData = {
       anggotaId: anggota?.id,
       productId: product?.id,
-      tgl_mulai: moment(dateStart).utcOffset(0, true).format(),
-      tgl_selesai: moment(dateEnd).utcOffset(0, true).format(),
+      tgl_mulai: moment(date?.from).utcOffset(0, true).format(),
+      tgl_selesai: moment(date?.to).utcOffset(0, true).format(),
     };
 
     axios.post("/api/sewa", requestData).then((res) => {
@@ -141,7 +143,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
           </p>
           <div className="flex flex-row items-center justify-between ">
             <p className="mr-2">Nomor Anggota</p>
-            <div className="flex w-full max-w-sm items-center space-x-2">
+            <div className="flex w-1/2 max-w-sm items-center space-x-2">
               <Input
                 placeholder="Nomor Anggota"
                 {...register("nomorAnggota")}
@@ -161,7 +163,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
             <div className="flex flex-row items-center justify-between">
               <p>Nama</p>
               <Input
-                className="bg-white w-80"
+                className="bg-white w-1/2"
                 disabled
                 defaultValue={anggota?.nama}
               />
@@ -171,7 +173,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
               <Input
                 defaultValue={anggota?.alamat}
                 disabled
-                className="bg-white w-80"
+                className="bg-white w-1/2"
               />
             </div>
             <div className="flex flex-row items-center justify-between">
@@ -179,7 +181,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
               <Input
                 disabled
                 defaultValue={anggota?.no_telp}
-                className="bg-white w-80"
+                className="bg-white w-1/2"
               />
             </div>
             <div className="flex flex-row items-center justify-between">
@@ -187,7 +189,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
               <Input
                 disabled
                 defaultValue={anggota?.angkatan}
-                className="bg-white w-80"
+                className="bg-white w-1/2"
               />
             </div>
           </div>
@@ -199,7 +201,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
             <Input
               disabled
               defaultValue={product?.name}
-              className="bg-white w-80"
+              className="bg-white w-1/2"
             />
           </div>
           <div className="flex flex-row items-center justify-between">
@@ -207,41 +209,56 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
             <Input
               disabled
               defaultValue={product?.price}
-              className="bg-white w-80"
+              className="bg-white w-1/2"
             />
           </div>
-          <div className="flex flex-row items-center justify-between">
-            <p>Tanggal Mulai</p>
+
+          <div
+            className={cn(
+              "grid gap-2",
+              (className = "flex flex-row items-center justify-between")
+            )}
+          >
+            <p>Tanggal</p>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
+                  id="date"
                   variant={"outline"}
                   className={cn(
-                    " justify-start text-left font-normal bg-white w-80",
-                    !dateStart && "text-muted-foreground"
+                    "w-1/2 justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
                   )}
                 >
-                  <FaCalendarMinus className="mr-2 h-4 w-4" />
-                  {dateStart ? (
-                    format(dateStart, "PPP")
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date?.from ? (
+                    date.to ? (
+                      <>
+                        {format(date.from, "LLL dd, y")} -{" "}
+                        {format(date.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(date.from, "LLL dd, y")
+                    )
                   ) : (
                     <span>Pick a date</span>
                   )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
-                  mode="single"
-                  selected={dateStart}
-                  onSelect={setDateStart}
                   initialFocus
+                  mode="range"
+                  defaultMonth={date?.from}
+                  selected={date}
+                  onSelect={setDate}
+                  numberOfMonths={2}
                   disabled={isDateDisabled}
                 />
               </PopoverContent>
             </Popover>
           </div>
-
-          <div className="flex flex-row items-center justify-between">
+          {/* <div className="flex flex-row items-center justify-between">
             <p>Tanggal Selesai</p>
             <Popover>
               <PopoverTrigger asChild>
@@ -266,7 +283,7 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
                 />
               </PopoverContent>
             </Popover>
-          </div>
+          </div> */}
 
           <Button
             className="bg-gray-700"
