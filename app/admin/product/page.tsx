@@ -40,22 +40,22 @@ const productPage = () => {
       <div className="text-right py-4 px-4">
         <AddProductForm />
       </div>
-      <div className="px-4 py-4">
+      <div className="mx-6 my-6 border rounded-md shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
+            <TableRow className="bg-slate-200">
+              <TableHead className="text-center w-1/12">ID</TableHead>
               <TableHead>Nama Barang</TableHead>
               <TableHead>Deskripsi</TableHead>
               <TableHead>Harga</TableHead>
-              <TableHead>Image</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead className="text-center">Image</TableHead>
+              <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {product.map((product, i) => (
               <TableRow key={i}>
-                <TableCell width={50}>{product.id}</TableCell>
+                <TableCell className="text-center">{product.id}</TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>

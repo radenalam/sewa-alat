@@ -30,11 +30,11 @@ const PengambilanPage = () => {
   }, []);
 
   return (
-    <div className="mx-6 my-6 border rounded-xl shadow-sm">
+    <div className="mx-6 my-6 border rounded-md shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>ID</TableHead>
+          <TableRow className="bg-slate-200">
+            <TableHead className="text-center w-1/12">ID</TableHead>
             <TableHead>Barang</TableHead>
             <TableHead>Peminjam</TableHead>
             <TableHead>Tanggal Mulai</TableHead>
@@ -46,7 +46,7 @@ const PengambilanPage = () => {
         <TableBody>
           {sewa.map((sewa, i) => (
             <TableRow key={i}>
-              <TableCell width={50}>{sewa.id}</TableCell>
+              <TableCell className="text-center">{sewa.id}</TableCell>
               <TableCell>{sewa.productId}</TableCell>
               <TableCell>{sewa.anggotaId}</TableCell>
               <TableCell>{sewa?.tgl_mulai.toString()}</TableCell>

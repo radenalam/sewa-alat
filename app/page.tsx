@@ -1,10 +1,28 @@
+"use client";
+
 import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import { ProductProps } from "@/types";
+import axios from "axios";
 
 const Home = () => {
+  const [product, setProduct] = useState<ProductProps[]>([]);
+  useEffect(() => {
+    axios
+      .get("/api/product")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setProduct(response.data);
+        } else {
+          console.error("Invalid response data format:", response.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching projects:", error));
+  }, []);
   return (
     <>
       <NavBar />
@@ -19,8 +37,16 @@ const Home = () => {
               <Input placeholder="Kamera" />
             </div>
 
-            <div className="">
-              <ProductCard />
+            <div className="grid grid-cols-3 gap-4">
+              {product.map((product, i) => (
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  description={product.description}
+                  image={product.image ?? "/default_camera.png"}
+                />
+              ))}
             </div>
           </div>
         </div>

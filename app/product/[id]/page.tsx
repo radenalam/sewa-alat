@@ -3,12 +3,11 @@
 import Navbar from "@/components/Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ProductProps, SewaProps } from "@/types/index";
+import { AnggotaProps, ProductProps, SewaProps } from "@/types/index";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 
 import { addDays, format, isSameDay } from "date-fns";
-import { FaCalendarMinus } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,18 +19,8 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import moment from "moment";
-import { Sewa } from "@prisma/client";
 import { DateRange } from "react-day-picker";
 import { CalendarIcon } from "@radix-ui/react-icons";
-
-type AnggotaProps = {
-  id: string;
-  nama: string;
-  alamat: string;
-  nomorAnggota: number;
-  no_telp: number;
-  angkatan: number;
-};
 
 const ProductDetails = (
   { params }: { params: { id: string } },

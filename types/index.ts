@@ -13,3 +13,12 @@ export interface SewaProps {
   tgl_mulai: Date;
   tgl_selesai: Date;
 }
+
+export interface AnggotaProps {
+  id: string;
+  nama: string;
+  alamat: string;
+  nomorAnggota: number;
+  no_telp: number;
+  angkatan: number;
+}

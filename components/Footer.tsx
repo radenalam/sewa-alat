@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="flex justify-between border-t h-24 items-center px-8">
+    <div className="flex justify-between border-t h-24 items-center px-8 mt-10">
       <div className="text-left">
         <p>@2023 Serufo Rent. Build By Raden Alam Sanjaya</p>
       </div>
