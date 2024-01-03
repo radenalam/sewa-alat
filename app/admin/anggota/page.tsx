@@ -1,5 +1,6 @@
 "use client";
 
+import AddAnggota from "@/components/anggota/AddAnggota";
 import {
   Table,
   TableBody,
@@ -29,30 +30,35 @@ const AnggotaPage = () => {
       .catch((error) => console.error("Error fetching projects:", error));
   }, []);
   return (
-    <div className="mx-6 my-6 border rounded-md shadow-sm">
-      <Table>
-        <TableHeader>
-          <TableRow className="bg-slate-200">
-            <TableHead className="text-center w-1/12">ID</TableHead>
-            <TableHead>Nama</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>No Telp</TableHead>
-            <TableHead>No Anggota</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {anggota.map((anggota, i) => (
-            <TableRow>
-              <TableCell className="text-center">1</TableCell>
-              <TableCell>{anggota.nama}</TableCell>
-              <TableCell>{anggota.alamat}</TableCell>
-              <TableCell>{anggota.no_telp}</TableCell>
-              <TableCell>{anggota.nomorAnggota}</TableCell>
+    <div>
+      <div className="text-right py-4 px-4">
+        <AddAnggota />
+      </div>
+      <div className="mx-6 my-2 border rounded-md shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-slate-200">
+              <TableHead className="text-center w-1/12">ID</TableHead>
+              <TableHead>Nama</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>No Telp</TableHead>
+              <TableHead>No Anggota</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody>
+            {anggota.map((anggota, i) => (
+              <TableRow>
+                <TableCell className="text-center">1</TableCell>
+                <TableCell>{anggota.nama}</TableCell>
+                <TableCell>{anggota.alamat}</TableCell>
+                <TableCell>{anggota.no_telp}</TableCell>
+                <TableCell>{anggota.nomorAnggota}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

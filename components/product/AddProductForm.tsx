@@ -40,7 +40,6 @@ const ProductForm = (product: AddProductFormProps) => {
     }
     product.image = `/${fileName}`;
 
-    console.log(product.image);
     axios
       .post("/api/product", product)
       .then((response) => {
@@ -59,7 +58,7 @@ const ProductForm = (product: AddProductFormProps) => {
         <DialogTrigger className="text-white bg-slate-500 px-3 py-2 rounded-md">
           Tambah Barang
         </DialogTrigger>
-        <DialogContent style={{ maxWidth: 450 }}>
+        <DialogContent>
           <DialogTitle>Tambah Barang</DialogTitle>
           <DialogDescription>Masukan data produk</DialogDescription>
 
