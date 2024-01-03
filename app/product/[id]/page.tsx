@@ -35,26 +35,37 @@ const ProductDetails = (
   const [date, setDate] = useState<DateRange | undefined>();
 
   useEffect(() => {
-    axios.get("/api/sewa").then((res) => {
-      const datesBooked = res.data.reduce((acc: any, sewa: SewaProps) => {
-        const start = new Date(sewa.tgl_mulai);
-        const end = new Date(sewa.tgl_selesai);
+    axios
+      .get(`/api/sewa/${params.id}`)
+      .then((res) => {
+        if (res.data && res.data.sewa && Array.isArray(res.data.sewa)) {
+          const datesBooked = res.data.sewa.reduce((acc: any, sewa: any) => {
+            const start = new Date(sewa.tgl_mulai);
+            const end = new Date(sewa.tgl_selesai);
 
-        // Menambahkan setiap tanggal dalam rentang ke dalam array
-        const rangeDates = [];
-        let currentDate = new Date(start);
+            // Menambahkan setiap tanggal dalam rentang ke dalam array
+            const rangeDates = [];
+            let currentDate = new Date(start);
 
-        while (currentDate <= end) {
-          rangeDates.push(new Date(currentDate));
-          currentDate.setDate(currentDate.getDate() + 1);
+            while (currentDate <= end) {
+              rangeDates.push(new Date(currentDate));
+              currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            return [...acc, ...rangeDates];
+          }, []);
+
+          setDatesBooked(datesBooked);
+        } else {
+          console.error("Invalid or missing data in API response");
+          // Atau Anda bisa menetapkan state atau melakukan penanganan kesalahan lainnya sesuai kebutuhan
         }
-
-        return [...acc, ...rangeDates];
-      }, []);
-
-      setDatesBooked(datesBooked);
-    });
-  }, []);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // Handle error, misalnya menetapkan state untuk menampilkan pesan kesalahan ke pengguna
+      });
+  }, [params.id]);
 
   const isDateDisabled = (date: Date) => {
     // Menonaktifkan hari sebelum hari ini

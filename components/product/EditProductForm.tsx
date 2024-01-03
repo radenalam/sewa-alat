@@ -57,6 +57,17 @@ const EditProduct = ({ product }: EditProductFormProps) => {
             placeholder="Price"
             {...register("price", { required: "Price is required" })}
           />
+          <img
+            src={
+              product?.image
+                ? `/uploads/${product.image}`
+                : "/default_camera.png"
+            }
+            alt="Product Image"
+            width={250}
+            height={250}
+            style={{ margin: "auto" }}
+          />
           <div>
             <Button onClick={handleSubmit(onEdit)}>Save</Button>
           </div>
