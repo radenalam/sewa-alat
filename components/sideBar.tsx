@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import classnames from "classnames";
 import { usePathname } from "next/navigation";
+import Login from "@/components/login";
 
 const Sidebar = () => {
   const currentPath = usePathname();
@@ -61,6 +62,11 @@ const Sidebar = () => {
               </div>
             </Link>
           ))}
+        </ul>
+        <ul>
+          <div className="text-zinc-500  px-2 py-2 rounded-md hover:text-zinc-300 hover:bg-slate-600 hover:px-2 hover:py-2 hover:rounded-md transition-colors">
+            <Login />
+          </div>
         </ul>
       </nav>
     </div>
