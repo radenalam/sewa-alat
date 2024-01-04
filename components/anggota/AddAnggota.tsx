@@ -38,7 +38,7 @@ const AddAnggota = (anggota: AddAnggotaFormProps) => {
     <div>
       <Dialog>
         <DialogTrigger className="text-white bg-slate-500 px-3 py-2 my-3 rounded-md">
-          Tambah Barang
+          Tambah Anggota
         </DialogTrigger>
         <DialogContent>
           <DialogTitle>Tambah Anggota</DialogTitle>

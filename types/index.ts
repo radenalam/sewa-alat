@@ -22,3 +22,11 @@ export interface AnggotaProps {
   no_telp: number;
   angkatan: number;
 }
+
+export interface UserProps {
+  id: string;
+  name: string;
+  username: string;
+  password: string;
+  isAdmin: boolean;
+}
