@@ -31,28 +31,17 @@ model Product {
   Sewa        Sewa[]
 }
 
-enum PeminjamType {
-  ANGGOTA
-  NON_ANGGOTA
-}
-
 model Sewa {
-  id           Int          @id @default(autoincrement())
-  productId    Int
-  product      Product      @relation(fields: [productId], references: [id])
-  // anggotaId   Int
-  // anggota     Anggota  @relation(fields: [anggotaId], references: [id])
-  peminjamId   Int // ID untuk Anggota atau NonAnggota
-  peminjamType PeminjamType // Menggunakan enum
-  tgl_mulai    DateTime
-  tgl_selesai  DateTime
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  Anggota      Anggota?    @relation(fields: [anggotaId], references: [id])
-  anggotaId    Int?
-  NonAnggota   NonAnggota? @relation(fields: [nonAnggotaId], references: [id])
-  nonAnggotaId Int?
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  product     Product  @relation(fields: [productId], references: [id])
+  anggotaId   Int
+  anggota     Anggota  @relation(fields: [anggotaId], references: [id])
+  tgl_mulai   DateTime
+  tgl_selesai DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // statusBarang String
 }
 
 model Anggota {
@@ -63,12 +52,4 @@ model Anggota {
   alamat       String
   no_telp      Int
   Sewa         Sewa[]
-}
-
-model NonAnggota {
-  id      Int    @id @default(autoincrement())
-  nama    String
-  alamat  String
-  no_telp Int
-  Sewa    Sewa[]
 }
