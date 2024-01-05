@@ -21,6 +21,8 @@ import { Input } from "@/components/ui/input";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { CalendarIcon } from "@radix-ui/react-icons";
+import { toast } from "@/components/ui/use-toast";
+import { string } from "zod";
 
 const ProductDetails = (
   { params }: { params: { id: string } },
@@ -30,9 +32,9 @@ const ProductDetails = (
   const [product, setProduct] = useState<ProductProps | null>(null);
   const [anggota, setAnggota] = useState<AnggotaProps | null>(null);
   const [bisaPesan, setBisaPesan] = useState<boolean>(false);
-
   const [datesBooked, setDatesBooked] = useState([]);
   const [date, setDate] = useState<DateRange | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -54,18 +56,15 @@ const ProductDetails = (
 
             return [...acc, ...rangeDates];
           }, []);
-
           setDatesBooked(datesBooked);
-        } else {
-          console.error("Invalid or missing data in API response");
-          // Atau Anda bisa menetapkan state atau melakukan penanganan kesalahan lainnya sesuai kebutuhan
+          console.log(datesBooked);
         }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         // Handle error, misalnya menetapkan state untuk menampilkan pesan kesalahan ke pengguna
       });
-  }, [params.id]);
+  }, []);
 
   const isDateDisabled = (date: Date) => {
     // Menonaktifkan hari sebelum hari ini
@@ -100,6 +99,8 @@ const ProductDetails = (
   };
 
   const handlePesan = () => {
+    setIsLoading(true);
+
     const requestData = {
       anggotaId: anggota?.id,
       productId: product?.id,
@@ -109,7 +110,12 @@ const ProductDetails = (
 
     axios.post("/api/sewa", requestData).then((res) => {
       if (res.status === 201) {
-        console.log(res.data);
+        toast({
+          title: `Booked: ${product?.name}`,
+          description: `Tanggal ${requestData.tgl_mulai} - ${requestData.tgl_selesai}`,
+        });
+        setBisaPesan(false);
+        setIsLoading(false);
       }
     });
   };
@@ -121,7 +127,7 @@ const ProductDetails = (
         {/* Kiri */}
         <div className="w-1/2  flex flex-col items-center">
           {product && (
-            <div>
+            <div className="">
               <img
                 src={
                   product.image
@@ -131,7 +137,6 @@ const ProductDetails = (
                 alt="Product Image"
                 width={250}
                 height={250}
-                style={{ margin: "auto" }}
               />
 
               <p>Name: {product.name}</p>
@@ -262,39 +267,13 @@ const ProductDetails = (
               </PopoverContent>
             </Popover>
           </div>
-          {/* <div className="flex flex-row items-center justify-between">
-            <p>Tanggal Selesai</p>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    " justify-start text-left font-normal bg-white w-80",
-                    !dateEnd && "text-muted-foreground"
-                  )}
-                >
-                  <FaCalendarMinus className="mr-2 h-4 w-4" />
-                  {dateEnd ? format(dateEnd, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={dateEnd}
-                  onSelect={setDateEnd}
-                  initialFocus
-                  disabled={isDateDisabled}
-                />
-              </PopoverContent>
-            </Popover>
-          </div> */}
 
           <Button
             className="bg-gray-700"
-            disabled={!bisaPesan}
+            disabled={!bisaPesan || isLoading}
             onClick={handleSubmit(handlePesan)}
           >
-            Pesan
+            {isLoading ? "Loading..." : "Pesan"}
           </Button>
         </div>
       </div>
