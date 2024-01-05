@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { AnggotaProps, ProductProps, SewaProps } from "@/types/index";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { addDays, format, isSameDay } from "date-fns";
 
 import { cn } from "@/lib/utils";
@@ -238,6 +238,7 @@ const ProductDetails = (
                     "w-1/2 justify-start text-left font-normal",
                     !date && "text-muted-foreground"
                   )}
+                  disabled={!bisaPesan}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {date?.from ? (
@@ -273,7 +274,16 @@ const ProductDetails = (
             disabled={!bisaPesan || isLoading}
             onClick={handleSubmit(handlePesan)}
           >
-            {isLoading ? "Loading..." : "Pesan"}
+            {isLoading ? (
+              <div className="flex flex-row gap-2 justify-center items-center">
+                <div className="animate-spin">
+                  <AiOutlineLoading3Quarters />
+                </div>
+                Loading
+              </div>
+            ) : (
+              "Pesan"
+            )}
           </Button>
         </div>
       </div>
