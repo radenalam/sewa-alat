@@ -39,7 +39,7 @@ const ImageUploader = ({ uploadSelesai }: any) => {
       axios
         .post("/api/image", formData)
         .then((res) => {
-          if (res.status === 201) {
+          if (res.status === 200) {
             uploadSelesai(res.data?.filename);
           } else {
             console.error("Image upload failed:", res);

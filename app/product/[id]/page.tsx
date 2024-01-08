@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AnggotaProps, ProductProps, SewaProps } from "@/types/index";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { addDays, format, isSameDay } from "date-fns";
@@ -22,7 +21,7 @@ import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { toast } from "@/components/ui/use-toast";
-import { string } from "zod";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ProductDetails = (
   { params }: { params: { id: string } },
@@ -35,6 +34,7 @@ const ProductDetails = (
   const [datesBooked, setDatesBooked] = useState([]);
   const [date, setDate] = useState<DateRange | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnggota, setIsAnggota] = useState(false);
 
   useEffect(() => {
     axios
@@ -150,58 +150,69 @@ const ProductDetails = (
           <p className="text-center mt-4 mb-8 text-2xl bg-gray-700 items-center rounded-md text-white py-2">
             Pinjam Barang
           </p>
-          <div className="flex flex-row items-center justify-between ">
-            <p className="mr-2">Nomor Anggota</p>
-            <div className="flex w-1/2 max-w-sm items-center space-x-2">
-              <Input
-                placeholder="Nomor Anggota"
-                {...register("nomorAnggota")}
-                className="bg-white"
-              />
-              <Button className="bg-gray-700" onClick={cekAnggota}>
-                Cek Anggota
-              </Button>
-            </div>
-          </div>
+          <Tabs defaultValue="account">
+            <TabsList className="flex flex-row w-full ">
+              <TabsTrigger value="anggota">Anggota</TabsTrigger>
+              <TabsTrigger value="nonanggota">Non Anggota</TabsTrigger>
+            </TabsList>
+            <TabsContent value="anggota">
+              <div className="flex flex-row items-center justify-between ">
+                <p className="mr-2">Nomor Anggota</p>
+                <div className="flex w-1/2 max-w-sm items-center space-x-2">
+                  <Input
+                    placeholder="Nomor Anggota"
+                    {...register("nomorAnggota")}
+                    className="bg-white"
+                  />
+                  <Button className="bg-gray-700" onClick={cekAnggota}>
+                    Cek Anggota
+                  </Button>
+                </div>
+              </div>
 
-          {/* Detail anggota */}
-          <div
-            hidden={bisaPesan ? false : true}
-            className="flex flex-col gap-3"
-          >
-            <div className="flex flex-row items-center justify-between">
-              <p>Nama</p>
-              <Input
-                className="bg-white w-1/2"
-                disabled
-                defaultValue={anggota?.nama}
-              />
-            </div>
-            <div className="flex flex-row items-center justify-between">
-              <p>Alamat</p>
-              <Input
-                defaultValue={anggota?.alamat}
-                disabled
-                className="bg-white w-1/2"
-              />
-            </div>
-            <div className="flex flex-row items-center justify-between">
-              <p>No Telp</p>
-              <Input
-                disabled
-                defaultValue={anggota?.no_telp}
-                className="bg-white w-1/2"
-              />
-            </div>
-            <div className="flex flex-row items-center justify-between">
-              <p>Angkatan</p>
-              <Input
-                disabled
-                defaultValue={anggota?.angkatan}
-                className="bg-white w-1/2"
-              />
-            </div>
-          </div>
+              {/* Detail anggota */}
+              <div
+                hidden={bisaPesan ? false : true}
+                className="flex flex-col gap-3"
+              >
+                <div className="flex flex-row items-center justify-between">
+                  <p>Nama</p>
+                  <Input
+                    className="bg-white w-1/2"
+                    disabled
+                    defaultValue={anggota?.nama}
+                  />
+                </div>
+                <div className="flex flex-row items-center justify-between">
+                  <p>Alamat</p>
+                  <Input
+                    defaultValue={anggota?.alamat}
+                    disabled
+                    className="bg-white w-1/2"
+                  />
+                </div>
+                <div className="flex flex-row items-center justify-between">
+                  <p>No Telp</p>
+                  <Input
+                    disabled
+                    defaultValue={anggota?.no_telp}
+                    className="bg-white w-1/2"
+                  />
+                </div>
+                <div className="flex flex-row items-center justify-between">
+                  <p>Angkatan</p>
+                  <Input
+                    disabled
+                    defaultValue={anggota?.angkatan}
+                    className="bg-white w-1/2"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="nonanggota">
+              Change your password here.
+            </TabsContent>
+          </Tabs>
 
           {/* SEWA */}
           <p className="text-center pt-4 text-xl">Detail Sewa</p>
