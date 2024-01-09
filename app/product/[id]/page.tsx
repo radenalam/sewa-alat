@@ -3,7 +3,12 @@
 import Navbar from "@/components/Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { AnggotaProps, ProductProps, SewaProps } from "@/types/index";
+import {
+  AnggotaProps,
+  NonAnggotaProps,
+  ProductProps,
+  SewaProps,
+} from "@/types/index";
 import { useForm } from "react-hook-form";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { addDays, format, isSameDay } from "date-fns";
@@ -27,14 +32,36 @@ const ProductDetails = (
   { params }: { params: { id: string } },
   { className }: React.HTMLAttributes<HTMLDivElement>
 ) => {
-  const { register, handleSubmit, getValues } = useForm<AnggotaProps>();
+  const {
+    register: registerAnggota,
+    handleSubmit: handleSubmitAnggota,
+    getValues: getValuesAnggota,
+    // ... other methods you might need for Anggota
+  } = useForm<AnggotaProps>();
+
+  const {
+    register: registerNonAnggota,
+    handleSubmit: handleSubmitNonAnggota,
+    getValues: getValuesNonAnggota,
+    watch: watchNonAnggota,
+    // ... other methods you might need for Non Anggota
+  } = useForm<NonAnggotaProps>();
+
   const [product, setProduct] = useState<ProductProps | null>(null);
   const [anggota, setAnggota] = useState<AnggotaProps | null>(null);
   const [bisaPesan, setBisaPesan] = useState<boolean>(false);
   const [datesBooked, setDatesBooked] = useState([]);
   const [date, setDate] = useState<DateRange | undefined>();
   const [isLoading, setIsLoading] = useState(false);
-  const [isAnggota, setIsAnggota] = useState(false);
+  const [isAnggota, setIsAnggota] = useState(true);
+  const NonAnggotaFields = watchNonAnggota(["no_telp", "alamat", "nama"]);
+
+  useEffect(() => {
+    const [nama, alamat, no_telp] = NonAnggotaFields;
+    if (nama && alamat && no_telp) {
+      setBisaPesan(true);
+    }
+  }, [NonAnggotaFields]);
 
   useEffect(() => {
     axios
@@ -84,8 +111,7 @@ const ProductDetails = (
   }, [params.id]); // Include params.id as a dependency
 
   const cekAnggota = () => {
-    setBisaPesan(false);
-    const nomorAnggotaValue = getValues("nomorAnggota");
+    const nomorAnggotaValue = getValuesAnggota("nomorAnggota");
 
     axios.get(`/api/anggota/${nomorAnggotaValue}`).then((res) => {
       if (res.data.anggota) {
@@ -98,28 +124,60 @@ const ProductDetails = (
     });
   };
 
-  const handlePesan = () => {
+  const handlePesanAnggota = () => {
     setIsLoading(true);
 
-    const requestData = {
-      anggotaId: anggota?.id,
+    const anggotaSewa: any = {
+      // data anggota yang akan dikirim
       productId: product?.id,
+      anggotaId: anggota?.id,
+      nonAnggotaId: null,
       tgl_mulai: moment(date?.from).utcOffset(0, true).format(),
       tgl_selesai: moment(date?.to).utcOffset(0, true).format(),
     };
 
-    axios.post("/api/sewa", requestData).then((res) => {
+    SimpanSewa(anggotaSewa);
+  };
+
+  const handlePesanNonAnggota = () => {
+    setIsLoading(true);
+
+    const no_telp = Number(getValuesNonAnggota("no_telp"));
+    const dataNonAnggota: any = {
+      // data non anggota yang akan dikirim
+      nama: getValuesNonAnggota("nama"),
+      alamat: getValuesNonAnggota("alamat"),
+      no_telp: no_telp,
+    };
+
+    console.log(dataNonAnggota);
+    axios.post("/api/nonanggota", dataNonAnggota).then((res) => {
+      if (res.status === 201) {
+        const nonAnggotaSewa: any = {
+          productId: product?.id,
+          anggotaId: null,
+          nonAnggotaId: res.data,
+          tgl_mulai: moment(date?.from).utcOffset(0, true).format(),
+          tgl_selesai: moment(date?.to).utcOffset(0, true).format(),
+        };
+        console.log(nonAnggotaSewa);
+        SimpanSewa(nonAnggotaSewa);
+      }
+    });
+  };
+
+  const SimpanSewa = (data: any) => {
+    axios.post("/api/sewa", data).then((res) => {
       if (res.status === 201) {
         toast({
           title: `Booked: ${product?.name}`,
-          description: `Tanggal ${requestData.tgl_mulai} - ${requestData.tgl_selesai}`,
+          description: `Tanggal ${data.tgl_mulai} - ${data.tgl_selesai}`,
         });
         setBisaPesan(false);
         setIsLoading(false);
       }
     });
   };
-
   return (
     <>
       <Navbar />
@@ -152,16 +210,31 @@ const ProductDetails = (
           </p>
           <Tabs defaultValue="account">
             <TabsList className="flex flex-row w-full ">
-              <TabsTrigger value="anggota">Anggota</TabsTrigger>
-              <TabsTrigger value="nonanggota">Non Anggota</TabsTrigger>
+              <TabsTrigger
+                className="mx-auto"
+                onClick={() => setIsAnggota(true)}
+                value="anggota"
+              >
+                Anggota
+              </TabsTrigger>
+              <TabsTrigger
+                className="mx-auto"
+                onClick={() => setIsAnggota(false)}
+                value="nonanggota"
+              >
+                Non Anggota
+              </TabsTrigger>
             </TabsList>
+
+            {/* ANGGOTA */}
+
             <TabsContent value="anggota">
-              <div className="flex flex-row items-center justify-between ">
+              <div className="flex flex-row items-center justify-between mb-3">
                 <p className="mr-2">Nomor Anggota</p>
-                <div className="flex w-1/2 max-w-sm items-center space-x-2">
+                <div className="flex w-2/3 max-w-sm items-center space-x-2">
                   <Input
                     placeholder="Nomor Anggota"
-                    {...register("nomorAnggota")}
+                    {...registerAnggota("nomorAnggota")}
                     className="bg-white"
                   />
                   <Button className="bg-gray-700" onClick={cekAnggota}>
@@ -178,39 +251,75 @@ const ProductDetails = (
                 <div className="flex flex-row items-center justify-between">
                   <p>Nama</p>
                   <Input
-                    className="bg-white w-1/2"
+                    className="bg-white w-2/3"
                     disabled
-                    defaultValue={anggota?.nama}
+                    value={anggota?.nama}
                   />
                 </div>
                 <div className="flex flex-row items-center justify-between">
                   <p>Alamat</p>
                   <Input
-                    defaultValue={anggota?.alamat}
+                    value={anggota?.alamat}
                     disabled
-                    className="bg-white w-1/2"
+                    className="bg-white w-2/3"
                   />
                 </div>
                 <div className="flex flex-row items-center justify-between">
                   <p>No Telp</p>
                   <Input
                     disabled
-                    defaultValue={anggota?.no_telp}
-                    className="bg-white w-1/2"
+                    value={anggota?.no_telp}
+                    className="bg-white w-2/3"
                   />
                 </div>
                 <div className="flex flex-row items-center justify-between">
                   <p>Angkatan</p>
                   <Input
                     disabled
-                    defaultValue={anggota?.angkatan}
-                    className="bg-white w-1/2"
+                    value={anggota?.angkatan}
+                    className="bg-white w-2/3"
                   />
                 </div>
               </div>
             </TabsContent>
+
+            {/* NON ANGGOTA */}
+
             <TabsContent value="nonanggota">
-              Change your password here.
+              <TabsContent value="nonanggota">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-row items-center justify-between">
+                    <p>Nama</p>
+                    <Input
+                      placeholder="Nama"
+                      {...registerNonAnggota("nama", {
+                        required: "Nama is required",
+                      })}
+                      className="bg-white w-2/3"
+                    />
+                  </div>
+                  <div className="flex flex-row items-center justify-between">
+                    <p>Alamat</p>
+                    <Input
+                      placeholder="Alamat"
+                      {...registerNonAnggota("alamat", {
+                        required: "Alamat is required",
+                      })}
+                      className="bg-white w-2/3"
+                    />
+                  </div>
+                  <div className="flex flex-row items-center justify-between">
+                    <p>No Telp</p>
+                    <Input
+                      placeholder="No Telp"
+                      {...registerNonAnggota("no_telp", {
+                        required: "No Telp is required",
+                      })}
+                      className="bg-white w-2/3"
+                    />
+                  </div>
+                </div>
+              </TabsContent>
             </TabsContent>
           </Tabs>
 
@@ -221,7 +330,7 @@ const ProductDetails = (
             <Input
               disabled
               defaultValue={product?.name}
-              className="bg-white w-1/2"
+              className="bg-white w-2/3"
             />
           </div>
           <div className="flex flex-row items-center justify-between">
@@ -229,7 +338,7 @@ const ProductDetails = (
             <Input
               disabled
               defaultValue={product?.price}
-              className="bg-white w-1/2"
+              className="bg-white w-2/3"
             />
           </div>
 
@@ -246,7 +355,7 @@ const ProductDetails = (
                   id="date"
                   variant={"outline"}
                   className={cn(
-                    "w-1/2 justify-start text-left font-normal",
+                    "w-2/3 justify-start text-left font-normal",
                     !date && "text-muted-foreground"
                   )}
                   disabled={!bisaPesan}
@@ -283,7 +392,11 @@ const ProductDetails = (
           <Button
             className="bg-gray-700"
             disabled={!bisaPesan || isLoading}
-            onClick={handleSubmit(handlePesan)}
+            onClick={
+              isAnggota
+                ? handleSubmitAnggota(handlePesanAnggota)
+                : handleSubmitNonAnggota(handlePesanNonAnggota)
+            }
           >
             {isLoading ? (
               <div className="flex flex-row gap-2 justify-center items-center">

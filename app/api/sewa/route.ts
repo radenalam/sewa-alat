@@ -4,9 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-
-  console.log("Received data:", body);
-
   const validation = Sewa.safeParse(body);
 
   if (!validation.success) {

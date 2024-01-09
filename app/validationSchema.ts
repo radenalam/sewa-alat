@@ -15,9 +15,16 @@ export const Anggota = z.object({
   no_telp: z.number(),
 });
 
+export const NonAnggota = z.object({
+  nama: z.string().min(1, "Produk harus dipilih."),
+  alamat: z.string(),
+  no_telp: z.number(),
+});
+
 export const Sewa = z.object({
   productId: z.number().min(1, "Produk harus dipilih."),
-  anggotaId: z.number().min(1, "User harus dipilih."),
+  anggotaId: z.number().nullable(),
+  nonAnggotaId: z.number().nullable(),
   tgl_mulai: z.date().or(z.string()),
   tgl_selesai: z.date().or(z.string()),
 });

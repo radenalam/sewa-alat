@@ -9,7 +9,8 @@ export interface ProductProps {
 export interface SewaProps {
   id: number;
   productId: number;
-  peminjamId: number;
+  anggotaId: number | null;
+  nonAnggotaId: number | null;
   tgl_mulai: Date;
   tgl_selesai: Date;
 }
@@ -21,6 +22,13 @@ export interface AnggotaProps {
   nomorAnggota: number;
   no_telp: number;
   angkatan: number;
+}
+
+export interface NonAnggotaProps {
+  id: string;
+  nama: string;
+  alamat: string;
+  no_telp: number;
 }
 
 export interface UserProps {
