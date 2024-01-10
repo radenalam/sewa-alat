@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import classnames from "classnames";
 import { usePathname } from "next/navigation";
-import Login from "@/components/login";
+import Login from "@/components/Login";
 
 const Sidebar = () => {
   const currentPath = usePathname();
@@ -29,7 +29,7 @@ const Sidebar = () => {
     <div
       className={`flex flex-col ${
         open ? "w-72" : "w-23"
-      } h-screen px-4 py-8 bg-white border-r dark:bg-gray-100 dark:border-gray-600 `}
+      } h-screen px-4 py-8 bg-primary-foreground `}
     >
       <div
         className="flex mx-4 space-x-2 mb-2 items-center"
@@ -48,11 +48,11 @@ const Sidebar = () => {
               style={{ marginBottom: "8px" }}
               key={link.href}
               className={classnames({
-                "text-zinc-200 bg-slate-400 px-2 py-2 rounded-md":
-                  link.href === currentPath, //To change the color of the current page
-                "text-zinc-500 px-2 py-2": link.href !== currentPath, //To change the color of the other pages
-                "hover:text-zinc-300 hover:bg-slate-600 hover:px-2 hover:py-2 hover:rounded-md transition-colors":
-                  true, //To change the color of the other pages when hovered
+                "text-background bg-accent-foreground px-2 py-2 rounded-md":
+                  link.href === currentPath, //Current
+                " px-2 py-2": link.href !== currentPath, //Other
+                "text-foregound hover:bg-accent hover:px-2 hover:py-2 hover:rounded-md transition-colors":
+                  true, //Hover
               })}
               href={link.href}
             >
@@ -64,7 +64,7 @@ const Sidebar = () => {
           ))}
         </ul>
         <ul>
-          <div className="text-zinc-500  px-2 py-2 rounded-md hover:text-zinc-300 hover:bg-slate-600 hover:px-2 hover:py-2 hover:rounded-md transition-colors">
+          <div className="px-2 py-2 rounded-md">
             <Login />
           </div>
         </ul>

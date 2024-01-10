@@ -55,7 +55,7 @@ const ProductForm = (product: AddProductFormProps) => {
     <div>
       <Dialog>
         {" "}
-        <DialogTrigger className="text-white bg-slate-500 px-3 py-2 rounded-md">
+        <DialogTrigger className=" bg-primary px-3 py-2 rounded-md">
           Tambah Barang
         </DialogTrigger>
         <DialogContent>

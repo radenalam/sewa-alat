@@ -4,9 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { Button } from "./ui/button";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const currentPath = usePathname();
+  const { theme, setTheme } = useTheme();
 
   const links = [
     { label: "Dashboard", href: "/" },
@@ -14,18 +18,23 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className=" mx-auto flex justify-between items-center sm:px-16 px-2 py-4 bg-transparent">
-      <Link href={"/"}>
-        <Image src="/logo.svg" alt="logo" width={180} height={180} />
+    <nav className=" flex justify-between items-center px-8 bg-transparent h-24 ">
+      <Link href="/">
+        <Image src="/serufo.png" alt="logo" width={250} height={10} />
       </Link>
       <div className="flex items-center space-x-2">
-        <Link
-          href="/admin"
-          replace
-          className="text bg-gray-100 px-3 py-2 rounded-md hover:bg-gray-300 hover:px-3 hover:py-2 hover:rounded-md transition"
+        <Button
+          size={"icon"}
+          variant={"ghost"}
+          className="mr-6"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
-          Admin
-        </Link>
+          <SunIcon className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <MoonIcon className="absolute h-6 w-6 rotate-0 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        </Button>
+        <a href="/admin">
+          <Button>Admin</Button>
+        </a>
       </div>
     </nav>
   );

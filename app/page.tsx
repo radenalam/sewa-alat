@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { ProductProps } from "@/types";
 import axios from "axios";
+import Loading from "./loading";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Home = () => {
   const [product, setProduct] = useState<ProductProps[]>([]);
@@ -36,8 +38,7 @@ const Home = () => {
             <div className=" py-10 max-w-sm">
               <Input placeholder="Kamera" />
             </div>
-
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-4 gap-5 w-full">
               {product.map((product, i) => (
                 <ProductCard
                   id={product.id}
@@ -46,7 +47,7 @@ const Home = () => {
                   description={product.description}
                   image={
                     product.image
-                      ? `/uploads/${product.image}`
+                      ? `/uploads${product.image}`
                       : "/default_camera.png"
                   }
                 />

@@ -181,11 +181,11 @@ const ProductDetails = (
   return (
     <>
       <Navbar />
-      <div className="flex mx-14 my-5 bg-gray-200 border px-8 py-8 rounded-xl shadow-2xl shadow-grey-500">
+      <div className="flex mx-14 my-5 bg-primary-foreground border-muted px-8 py-8 rounded-xl shadow-2xl">
         {/* Kiri */}
-        <div className="w-1/2  flex flex-col items-center">
+        <div className="w-1/2 flex flex-col">
           {product && (
-            <div className="">
+            <div className=" h-full w-full">
               <img
                 src={
                   product.image
@@ -195,6 +195,7 @@ const ProductDetails = (
                 alt="Product Image"
                 width={250}
                 height={250}
+                className="items-center mx-auto w-full  px-8"
               />
 
               <p>Name: {product.name}</p>
@@ -204,8 +205,8 @@ const ProductDetails = (
           )}
         </div>
         {/* Kanan */}
-        <div className="bg-slate-300 rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
-          <p className="text-center mt-4 mb-8 text-2xl bg-gray-700 items-center rounded-md text-white py-2">
+        <div className="bg-secondary rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
+          <p className="font-extrabold text-center mt-4 mb-8 text-2xl bg-secondary items-center rounded-md py-2">
             Pinjam Barang
           </p>
           <Tabs defaultValue="account">
@@ -237,7 +238,7 @@ const ProductDetails = (
                     {...registerAnggota("nomorAnggota")}
                     className="bg-white"
                   />
-                  <Button className="bg-gray-700" onClick={cekAnggota}>
+                  <Button className="bg-primary" onClick={cekAnggota}>
                     Cek Anggota
                   </Button>
                 </div>
@@ -390,7 +391,7 @@ const ProductDetails = (
           </div>
 
           <Button
-            className="bg-gray-700"
+            className="bg-foreground"
             disabled={!bisaPesan || isLoading}
             onClick={
               isAnggota
