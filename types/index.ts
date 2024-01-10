@@ -13,6 +13,7 @@ export interface SewaProps {
   nonAnggotaId: number | null;
   tgl_mulai: Date;
   tgl_selesai: Date;
+  total_harga: number;
 }
 
 export interface AnggotaProps {

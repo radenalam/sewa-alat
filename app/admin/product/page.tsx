@@ -43,13 +43,23 @@ const productPage = () => {
       <div className="mx-6 my-6 border rounded-md shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow className="bg-slate-200">
-              <TableHead className="text-center w-1/12">ID</TableHead>
-              <TableHead>Nama Barang</TableHead>
-              <TableHead>Deskripsi</TableHead>
-              <TableHead>Harga</TableHead>
-              <TableHead className="text-center">Image</TableHead>
-              <TableHead className="text-right">Action</TableHead>
+            <TableRow className="bg-secondary">
+              <TableHead className="text-secondary-foreground text-center w-1/12">
+                ID
+              </TableHead>
+              <TableHead className="text-secondary-foreground">
+                Nama Barang
+              </TableHead>
+              <TableHead className="text-secondary-foreground">
+                Deskripsi
+              </TableHead>
+              <TableHead className="text-secondary-foreground">Harga</TableHead>
+              <TableHead className="text-secondary-foreground text-center">
+                Image
+              </TableHead>
+              <TableHead className="text-secondary-foreground text-right">
+                Action
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

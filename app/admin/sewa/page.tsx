@@ -30,16 +30,27 @@ const PengambilanPage = () => {
   }, []);
 
   return (
-    <div className="mx-6 my-6 border rounded-md shadow-sm">
+    <div className="mx-6 my-6 border rounded-md">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-200">
-            <TableHead className="text-center w-1/12">ID</TableHead>
-            <TableHead>Barang</TableHead>
-            <TableHead>Peminjam</TableHead>
-            <TableHead>Tanggal Mulai</TableHead>
-            <TableHead>Tanggal Selesai</TableHead>
-            <TableHead>Action</TableHead>
+          <TableRow className="bg-secondary ">
+            <TableHead className="text-center w-1/12 text-secondary-foreground">
+              ID
+            </TableHead>
+            <TableHead className="text-secondary-foreground">Barang</TableHead>
+            <TableHead className="text-secondary-foreground">
+              Peminjam
+            </TableHead>
+            <TableHead className="text-secondary-foreground">
+              Tanggal Mulai
+            </TableHead>
+            <TableHead className="text-secondary-foreground">
+              Tanggal Selesai
+            </TableHead>
+            <TableHead className="text-secondary-foreground">
+              Total Harga
+            </TableHead>
+            <TableHead className="text-secondary-foreground">Action</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -47,11 +58,16 @@ const PengambilanPage = () => {
           {sewa.map((sewa, i) => (
             <TableRow key={i}>
               <TableCell className="text-center">{sewa.id}</TableCell>
-              <TableCell>{sewa.productId}</TableCell>
-              <TableCell>{sewa.anggotaId}</TableCell>
+              <TableCell className="text-center">{sewa.productId}</TableCell>
+              <TableCell>
+                {sewa.anggotaId
+                  ? "Anggota : " + sewa.anggotaId
+                  : "Non Anggota : " + sewa.nonAnggotaId}
+              </TableCell>
               <TableCell>{sewa?.tgl_mulai.toString()}</TableCell>
               <TableCell>{sewa?.tgl_selesai.toString()}</TableCell>
-
+              <TableCell>{sewa?.total_harga}</TableCell>
+              <TableCell>ACTION</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           ))}

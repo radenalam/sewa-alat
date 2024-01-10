@@ -55,6 +55,21 @@ const ProductDetails = (
   const [isLoading, setIsLoading] = useState(false);
   const [isAnggota, setIsAnggota] = useState(true);
   const NonAnggotaFields = watchNonAnggota(["no_telp", "alamat", "nama"]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (date?.from && date?.to) {
+      const start = new Date(date.from);
+      const end = new Date(date.to);
+      const difference =
+        Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) +
+        1; // Tambahkan 1 untuk memasukkan hari pertama
+      if (product?.price) {
+        const total = difference * product?.price;
+        setTotalPrice(total);
+      }
+    }
+  }, [date, product?.price]);
 
   useEffect(() => {
     const [nama, alamat, no_telp] = NonAnggotaFields;
@@ -84,7 +99,6 @@ const ProductDetails = (
             return [...acc, ...rangeDates];
           }, []);
           setDatesBooked(datesBooked);
-          console.log(datesBooked);
         }
       })
       .catch((error) => {
@@ -134,6 +148,7 @@ const ProductDetails = (
       nonAnggotaId: null,
       tgl_mulai: moment(date?.from).utcOffset(0, true).format(),
       tgl_selesai: moment(date?.to).utcOffset(0, true).format(),
+      total_harga: 0,
     };
 
     SimpanSewa(anggotaSewa);
@@ -149,8 +164,6 @@ const ProductDetails = (
       alamat: getValuesNonAnggota("alamat"),
       no_telp: no_telp,
     };
-
-    console.log(dataNonAnggota);
     axios.post("/api/nonanggota", dataNonAnggota).then((res) => {
       if (res.status === 201) {
         const nonAnggotaSewa: any = {
@@ -159,8 +172,8 @@ const ProductDetails = (
           nonAnggotaId: res.data,
           tgl_mulai: moment(date?.from).utcOffset(0, true).format(),
           tgl_selesai: moment(date?.to).utcOffset(0, true).format(),
+          total_harga: Number(totalPrice),
         };
-        console.log(nonAnggotaSewa);
         SimpanSewa(nonAnggotaSewa);
       }
     });
@@ -185,7 +198,7 @@ const ProductDetails = (
         {/* Kiri */}
         <div className="w-1/2 flex flex-col">
           {product && (
-            <div className=" h-full w-full">
+            <div className=" h-full w-full px-8">
               <p className="text-center px-3 py-3 text-3xl font-semibold">
                 {product.name}
               </p>
@@ -201,18 +214,20 @@ const ProductDetails = (
                 className="items-center mx-auto w-full px-8"
               />
 
-              <p>Description: {product.description}</p>
+              <p className=" text-xl text-secondary-foreground">
+                {product.description}
+              </p>
               <p>Price: {product.price}</p>
             </div>
           )}
         </div>
         {/* Kanan */}
         <div className="bg-secondary rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
-          <p className="font-extrabold text-center mt-4 mb-8 text-2xl bg-secondary items-center rounded-md py-2">
+          <p className="font-extrabold text-center mt-4 mb-2 text-2xl bg-secondary items-center rounded-md py-2">
             Pinjam Barang
           </p>
           <Tabs defaultValue="account">
-            <TabsList className="flex flex-row w-full ">
+            <TabsList className="flex flex-row w-full mb-6">
               <TabsTrigger
                 className="mx-auto"
                 onClick={() => setIsAnggota(true)}
@@ -332,7 +347,7 @@ const ProductDetails = (
             <p>Barang</p>
             <Input
               disabled
-              defaultValue={product?.name}
+              value={product?.name}
               className="border-2-accent w-2/3"
             />
           </div>
@@ -340,7 +355,13 @@ const ProductDetails = (
             <p>Harga</p>
             <Input
               disabled
-              defaultValue={product?.price}
+              value={
+                isAnggota
+                  ? "0"
+                  : totalPrice
+                  ? `Rp${totalPrice.toLocaleString("id-ID")}/total`
+                  : ""
+              }
               className="border-2-accent w-2/3"
             />
           </div>

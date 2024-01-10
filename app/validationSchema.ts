@@ -27,6 +27,7 @@ export const Sewa = z.object({
   nonAnggotaId: z.number().nullable(),
   tgl_mulai: z.date().or(z.string()),
   tgl_selesai: z.date().or(z.string()),
+  total_harga: z.number(),
 });
 
 export const UploadImage = z.object({
