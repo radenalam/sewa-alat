@@ -186,6 +186,9 @@ const ProductDetails = (
         <div className="w-1/2 flex flex-col">
           {product && (
             <div className=" h-full w-full">
+              <p className="text-center px-3 py-3 text-3xl font-semibold">
+                {product.name}
+              </p>
               <img
                 src={
                   product.image
@@ -195,10 +198,9 @@ const ProductDetails = (
                 alt="Product Image"
                 width={250}
                 height={250}
-                className="items-center mx-auto w-full  px-8"
+                className="items-center mx-auto w-full px-8"
               />
 
-              <p>Name: {product.name}</p>
               <p>Description: {product.description}</p>
               <p>Price: {product.price}</p>
             </div>
@@ -236,7 +238,7 @@ const ProductDetails = (
                   <Input
                     placeholder="Nomor Anggota"
                     {...registerAnggota("nomorAnggota")}
-                    className="bg-white"
+                    className="border-2-accent"
                   />
                   <Button className="bg-primary" onClick={cekAnggota}>
                     Cek Anggota
@@ -252,7 +254,7 @@ const ProductDetails = (
                 <div className="flex flex-row items-center justify-between">
                   <p>Nama</p>
                   <Input
-                    className="bg-white w-2/3"
+                    className="border-2-accent w-2/3"
                     disabled
                     value={anggota?.nama}
                   />
@@ -262,7 +264,7 @@ const ProductDetails = (
                   <Input
                     value={anggota?.alamat}
                     disabled
-                    className="bg-white w-2/3"
+                    className="border-2-accent w-2/3"
                   />
                 </div>
                 <div className="flex flex-row items-center justify-between">
@@ -270,7 +272,7 @@ const ProductDetails = (
                   <Input
                     disabled
                     value={anggota?.no_telp}
-                    className="bg-white w-2/3"
+                    className="border-2-accent w-2/3"
                   />
                 </div>
                 <div className="flex flex-row items-center justify-between">
@@ -278,7 +280,7 @@ const ProductDetails = (
                   <Input
                     disabled
                     value={anggota?.angkatan}
-                    className="bg-white w-2/3"
+                    className="border-2-accent w-2/3"
                   />
                 </div>
               </div>
@@ -296,7 +298,7 @@ const ProductDetails = (
                       {...registerNonAnggota("nama", {
                         required: "Nama is required",
                       })}
-                      className="bg-white w-2/3"
+                      className="border-2-accent w-2/3"
                     />
                   </div>
                   <div className="flex flex-row items-center justify-between">
@@ -306,7 +308,7 @@ const ProductDetails = (
                       {...registerNonAnggota("alamat", {
                         required: "Alamat is required",
                       })}
-                      className="bg-white w-2/3"
+                      className="border-2-accent w-2/3"
                     />
                   </div>
                   <div className="flex flex-row items-center justify-between">
@@ -316,7 +318,7 @@ const ProductDetails = (
                       {...registerNonAnggota("no_telp", {
                         required: "No Telp is required",
                       })}
-                      className="bg-white w-2/3"
+                      className="border-2-accent w-2/3"
                     />
                   </div>
                 </div>
@@ -331,7 +333,7 @@ const ProductDetails = (
             <Input
               disabled
               defaultValue={product?.name}
-              className="bg-white w-2/3"
+              className="border-2-accent w-2/3"
             />
           </div>
           <div className="flex flex-row items-center justify-between">
@@ -339,7 +341,7 @@ const ProductDetails = (
             <Input
               disabled
               defaultValue={product?.price}
-              className="bg-white w-2/3"
+              className="border-2-accent w-2/3"
             />
           </div>
 
