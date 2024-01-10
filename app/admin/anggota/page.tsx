@@ -1,6 +1,8 @@
 "use client";
 
 import AddAnggota from "@/components/anggota/AddAnggota";
+import DeleteAnggota from "@/components/anggota/DeleteAnggota";
+import EditAnggota from "@/components/anggota/EditAnggota";
 import {
   Table,
   TableBody,
@@ -37,23 +39,30 @@ const AnggotaPage = () => {
       <div className="mx-6 my-2 border rounded-md shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow className="bg-slate-200">
+            <TableRow className="bg-secondary">
               <TableHead className="text-center w-1/12">ID</TableHead>
               <TableHead>Nama</TableHead>
-              <TableHead>Email</TableHead>
+              <TableHead>Alamat</TableHead>
               <TableHead>No Telp</TableHead>
               <TableHead>No Anggota</TableHead>
+              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {anggota.map((anggota, i) => (
-              <TableRow>
-                <TableCell className="text-center">1</TableCell>
+            {anggota.map((anggota) => (
+              <TableRow key={anggota.id}>
+                <TableCell className="text-center">{anggota.id}</TableCell>
                 <TableCell>{anggota.nama}</TableCell>
                 <TableCell>{anggota.alamat}</TableCell>
                 <TableCell>{anggota.no_telp}</TableCell>
                 <TableCell>{anggota.nomorAnggota}</TableCell>
+                <TableCell>
+                  <div className="flex flex-row space-x-2">
+                    {anggota && <EditAnggota anggota={anggota} />}
+                    {anggota && <DeleteAnggota anggota={anggota} />}
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

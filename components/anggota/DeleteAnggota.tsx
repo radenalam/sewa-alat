@@ -1,7 +1,6 @@
-import { ProductProps } from "@/types";
-import axios from "axios";
-import React from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
+"use client";
+
+import { AnggotaProps } from "@/types";
 
 import {
   AlertDialog,
@@ -16,20 +15,22 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "../ui/button";
 
-type DeleteProductFormProps = {
-  product?: ProductProps;
+import axios from "axios";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+
+type DeleteAnggotaProps = {
+  anggota?: AnggotaProps;
 };
 
-const DeleteProductForm = ({ product }: DeleteProductFormProps) => {
+const DeleteAnggota = ({ anggota }: DeleteAnggotaProps) => {
   const onDelete = (id: number) => {
-    axios
-      .delete(`/api/product/${id}`)
-      .then((response) => {
-        if (response.status === 200) {
-          window.location.reload();
-        }
-      })
-      .catch((error) => console.error("Error deleting project:", error));
+    axios.delete(`/api/anggota/id/${anggota?.id}`).then((response) => {
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    });
   };
   return (
     <div>
@@ -38,15 +39,15 @@ const DeleteProductForm = ({ product }: DeleteProductFormProps) => {
           <FaRegTrashAlt className="h-6 w-6" />
         </AlertDialogTrigger>
         <AlertDialogContent style={{ maxWidth: 450 }}>
-          <AlertDialogTitle>Delete {product?.name}</AlertDialogTitle>
+          <AlertDialogTitle>Delete {anggota?.nama}</AlertDialogTitle>
           <AlertDialogDescription>
-            Apakah anda yakin menghapus {product?.name} ?
+            Apakah anda yakin menghapus {anggota?.nama} ?
           </AlertDialogDescription>
 
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction>
-            <Button color="red" onClick={() => onDelete(product?.id as number)}>
-              Delete Product
+            <Button onClick={() => onDelete(anggota?.id as number)}>
+              Hapus Anggota
             </Button>
           </AlertDialogAction>
         </AlertDialogContent>
@@ -55,4 +56,4 @@ const DeleteProductForm = ({ product }: DeleteProductFormProps) => {
   );
 };
 
-export default DeleteProductForm;
+export default DeleteAnggota;

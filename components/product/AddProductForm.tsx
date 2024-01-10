@@ -38,7 +38,7 @@ const ProductForm = (product: AddProductFormProps) => {
     if (!product.description) {
       product.description = null;
     }
-    product.image = `/${fileName}`;
+    product.image = `${fileName}`;
 
     axios
       .post("/api/product", product)

@@ -47,7 +47,7 @@ const Home = () => {
                   description={product.description}
                   image={
                     product.image
-                      ? `/uploads${product.image}`
+                      ? `/uploads/${product.image}`
                       : "/default_camera.png"
                   }
                 />

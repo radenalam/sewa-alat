@@ -84,7 +84,7 @@ const productPage = () => {
                 </TableCell>
 
                 <TableCell align="right">
-                  <div className="float-right space-x-0.5 flex flex-row">
+                  <div className="flex flex-row space-x-2">
                     <EditProductForm product={product} />
                     <DeleteProductForm product={product} />
                   </div>

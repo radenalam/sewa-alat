@@ -3,8 +3,8 @@ import { Anggota } from "@/app/validationSchema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const sewa = await prisma.anggota.findMany();
-  return NextResponse.json(sewa, { status: 200 });
+  const anggota = await prisma.anggota.findMany();
+  return NextResponse.json(anggota, { status: 200 });
 }
 
 export async function POST(req: NextRequest) {

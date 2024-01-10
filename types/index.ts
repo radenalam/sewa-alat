@@ -17,7 +17,7 @@ export interface SewaProps {
 }
 
 export interface AnggotaProps {
-  id: string;
+  id: number;
   nama: string;
   alamat: string;
   nomorAnggota: number;
@@ -26,14 +26,14 @@ export interface AnggotaProps {
 }
 
 export interface NonAnggotaProps {
-  id: string;
+  id: number;
   nama: string;
   alamat: string;
   no_telp: number;
 }
 
 export interface UserProps {
-  id: string;
+  id: number;
   name: string;
   username: string;
   password: string;

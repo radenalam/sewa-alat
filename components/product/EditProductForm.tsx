@@ -23,9 +23,7 @@ type EditProductFormProps = {
 };
 
 const EditProduct = ({ product }: EditProductFormProps) => {
-  const { handleSubmit, register } = useForm<ProductProps>({
-    defaultValues: product,
-  });
+  const { handleSubmit, register } = useForm<ProductProps>();
   const onEdit = (product: ProductProps) => {
     product.price = Number(product.price);
     if (!product.image) {
@@ -41,7 +39,7 @@ const EditProduct = ({ product }: EditProductFormProps) => {
   return (
     <Dialog>
       <DialogTrigger>
-        <FaEdit />
+        <FaEdit className="h-6 w-6" />
       </DialogTrigger>
 
       <DialogContent style={{ maxWidth: 450 }}>
@@ -50,11 +48,17 @@ const EditProduct = ({ product }: EditProductFormProps) => {
         <div className="flex flex-col gap-3">
           <Input
             placeholder="Title"
+            defaultValue={product?.name}
             {...register("name", { required: "Title is required" })}
           />
-          <Input placeholder="Description" {...register("description")} />
+          <Input
+            placeholder="Description"
+            defaultValue={product?.description ?? ""}
+            {...register("description")}
+          />
           <Input
             placeholder="Price"
+            defaultValue={product?.price}
             {...register("price", { required: "Price is required" })}
           />
           <img
