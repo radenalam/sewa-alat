@@ -1,4 +1,4 @@
-import { Anggota } from "@/app/validationSchema";
+import { EditAnggota } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,19 +25,19 @@ export async function GET(
   }
 }
 
-export async function PUT(
+export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: Number } }
 ) {
   const body = await req.json();
   try {
     // Validate the request body
-    const validation = Anggota.safeParse(body);
+    const validation = EditAnggota.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(validation.error.format(), { status: 400 });
     }
 
-    // Update the project based on the ID
+    // Update the anggota based on the ID
     const updatedAnggota = await prisma.anggota.update({
       where: { id: Number(params.id) },
       data: validation.data,

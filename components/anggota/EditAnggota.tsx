@@ -25,17 +25,21 @@ type EditAnggotaProps = {
 const EditAnggota = ({ anggota }: EditAnggotaProps) => {
   const { handleSubmit, register } = useForm<AnggotaProps>();
 
-  const onEdit = (anggota: AnggotaProps) => {
-    anggota.no_telp = Number(anggota?.no_telp);
-    anggota.nomorAnggota = Number(anggota?.nomorAnggota);
-    anggota.angkatan = Number(anggota?.angkatan);
-    console.log(anggota?.id);
-    axios.put(`/api/anggota/id/${anggota?.id}`, anggota).then((response) => {
-      console.log("Response:", response);
-      if (response.status === 201) {
-        window.location.reload();
-      }
-    });
+  const onEdit = (formData: AnggotaProps) => {
+    const updatedAnggota = {
+      ...formData,
+      no_telp: Number(formData.no_telp),
+      nomorAnggota: Number(formData.nomorAnggota),
+      angkatan: Number(formData.angkatan),
+    };
+    axios
+      .patch(`/api/anggota/id/${anggota?.id}`, updatedAnggota)
+      .then((response) => {
+        console.log("Response:", response);
+        if (response.status === 201) {
+          window.location.reload();
+        }
+      });
   };
   return (
     <div>

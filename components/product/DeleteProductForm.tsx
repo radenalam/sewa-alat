@@ -45,7 +45,7 @@ const DeleteProductForm = ({ product }: DeleteProductFormProps) => {
 
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction>
-            <Button color="red" onClick={() => onDelete(product?.id as number)}>
+            <Button onClick={() => onDelete(product?.id as number)}>
               Delete Product
             </Button>
           </AlertDialogAction>

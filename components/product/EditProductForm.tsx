@@ -24,17 +24,19 @@ type EditProductFormProps = {
 
 const EditProduct = ({ product }: EditProductFormProps) => {
   const { handleSubmit, register } = useForm<ProductProps>();
-  const onEdit = (product: ProductProps) => {
-    product.price = Number(product.price);
-    if (!product.image) {
-      product.image = null;
-    }
-    axios.put(`/api/product/${product?.id}`, product).then((response) => {
-      console.log("Response:", response);
-      if (response.status === 201) {
-        window.location.reload();
-      }
-    });
+  const onEdit = (formData: ProductProps) => {
+    const updatedProduct = {
+      ...formData,
+      price: Number(formData.price),
+    };
+    axios
+      .put(`/api/product/${product?.id}`, updatedProduct)
+      .then((response) => {
+        console.log("Response:", response);
+        if (response.status === 201) {
+          window.location.reload();
+        }
+      });
   };
   return (
     <Dialog>

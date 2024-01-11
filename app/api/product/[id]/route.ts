@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
-import { createProductSchema } from "@/app/validationSchema";
+import { EditProduct } from "@/app/validationSchema";
 
 export async function GET(
   req: NextRequest,
@@ -25,14 +25,14 @@ export async function GET(
   }
 }
 
-export async function PUT(
+export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: Number } }
 ) {
   const body = await req.json();
   try {
     // Validate the request body
-    const validation = createProductSchema.safeParse(body);
+    const validation = EditProduct.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(validation.error.format(), { status: 400 });
     }
