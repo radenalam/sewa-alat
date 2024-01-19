@@ -53,11 +53,13 @@ const productPage = () => {
               <TableHead className="text-secondary-foreground">
                 Deskripsi
               </TableHead>
-              <TableHead className="text-secondary-foreground">Harga</TableHead>
+              <TableHead className="text-secondary-foregroun text-end">
+                Harga
+              </TableHead>
               <TableHead className="text-secondary-foreground text-center">
                 Image
               </TableHead>
-              <TableHead className="text-secondary-foreground text-right">
+              <TableHead className="text-secondary-foreground text-center">
                 Action
               </TableHead>
             </TableRow>
@@ -68,7 +70,9 @@ const productPage = () => {
                 <TableCell className="text-center">{product.id}</TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.description}</TableCell>
-                <TableCell>{product.price}</TableCell>
+                <TableCell className="text-end">
+                  {product.price.toLocaleString("id-ID")}
+                </TableCell>
 
                 <TableCell align="center">
                   <img
@@ -83,7 +87,7 @@ const productPage = () => {
                   />
                 </TableCell>
 
-                <TableCell align="right">
+                <TableCell>
                   <div className="flex flex-row space-x-2">
                     <EditProductForm product={product} />
                     <DeleteProductForm product={product} />

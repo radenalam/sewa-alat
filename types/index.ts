@@ -14,6 +14,8 @@ export interface SewaProps {
   tgl_mulai: Date;
   tgl_selesai: Date;
   total_harga: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface AnggotaProps {

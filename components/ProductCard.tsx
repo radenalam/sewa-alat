@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 
 const ProductCard = ({ id, name, price, description, image }: ProductProps) => {
-  const formattedPrice = price.toLocaleString("id-ID");
   return (
     <div className=" group bg-secondary rounded-lg items-center pb-1 shadow-md">
       <div className="mx-5 my-5 flex flex-col justify-between h-full pb-10">
@@ -24,7 +23,7 @@ const ProductCard = ({ id, name, price, description, image }: ProductProps) => {
 
             <p className="flex mt-2 text-[22px] font-extrabold">
               <span className="self-start text-sm font-semibold">Rp</span>
-              {formattedPrice}
+              {price.toLocaleString("id-ID")}
               <span className="self-end text-sm font-medium">/hari</span>
             </p>
 

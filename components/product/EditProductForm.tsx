@@ -30,7 +30,7 @@ const EditProduct = ({ product }: EditProductFormProps) => {
       price: Number(formData.price),
     };
     axios
-      .put(`/api/product/${product?.id}`, updatedProduct)
+      .patch(`/api/product/${product?.id}`, updatedProduct)
       .then((response) => {
         console.log("Response:", response);
         if (response.status === 201) {

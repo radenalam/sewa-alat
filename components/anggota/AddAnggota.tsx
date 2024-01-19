@@ -37,12 +37,12 @@ const AddAnggota = (anggota: AddAnggotaFormProps) => {
   return (
     <div>
       <Dialog>
-        <DialogTrigger className="text-white bg-slate-500 px-3 py-2 my-3 rounded-md">
+        <DialogTrigger className=" bg-primary px-3 py-2 my-3 rounded-md">
           Tambah Anggota
         </DialogTrigger>
         <DialogContent>
           <DialogTitle>Tambah Anggota</DialogTitle>
-          <DialogDescription>masukan data anggota</DialogDescription>
+          <DialogDescription>Masukan data anggota</DialogDescription>
           <Input placeholder="Nama Lengkap" {...register("nama")} />
           <Input placeholder="Nomor Anggota" {...register("nomorAnggota")} />
           <Input placeholder="Angkatan" {...register("angkatan")} />

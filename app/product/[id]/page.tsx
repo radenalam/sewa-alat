@@ -217,7 +217,7 @@ const ProductDetails = (
               <p className=" text-xl text-secondary-foreground">
                 {product.description}
               </p>
-              <p>Price: {product.price}</p>
+              <p>Price: {product.price.toLocaleString("id-ID")}</p>
             </div>
           )}
         </div>
@@ -226,18 +226,22 @@ const ProductDetails = (
           <p className="font-extrabold text-center mt-4 mb-2 text-2xl bg-secondary items-center rounded-md py-2">
             Pinjam Barang
           </p>
-          <Tabs defaultValue="account">
-            <TabsList className="flex flex-row w-full mb-6">
+          <Tabs defaultValue="anggota">
+            <TabsList className="flex flex-row w-full space-x-2 py-2 ">
               <TabsTrigger
-                className="mx-auto"
-                onClick={() => setIsAnggota(true)}
+                className="mx-auto bg-primary-foreground text-inherit text-lg w-full"
+                onClick={() => {
+                  setIsAnggota(true), console.log(isAnggota);
+                }}
                 value="anggota"
               >
                 Anggota
               </TabsTrigger>
               <TabsTrigger
-                className="mx-auto"
-                onClick={() => setIsAnggota(false)}
+                className="mx-auto bg-primary-foreground text-inherit text-lg w-full"
+                onClick={() => {
+                  setIsAnggota(false), console.log(isAnggota);
+                }}
                 value="nonanggota"
               >
                 Non Anggota
@@ -249,7 +253,7 @@ const ProductDetails = (
             <TabsContent value="anggota">
               <div className="flex flex-row items-center justify-between mb-3">
                 <p className="mr-2">Nomor Anggota</p>
-                <div className="flex w-2/3 max-w-sm items-center space-x-2">
+                <div className="flex w-2/3 items-center space-x-2">
                   <Input
                     placeholder="Nomor Anggota"
                     {...registerAnggota("nomorAnggota")}
@@ -395,7 +399,7 @@ const ProductDetails = (
                       format(date.from, "LLL dd, y")
                     )
                   ) : (
-                    <span>Pick a date</span>
+                    <span>Pilih Tanggal</span>
                   )}
                 </Button>
               </PopoverTrigger>
