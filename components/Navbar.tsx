@@ -18,7 +18,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className=" flex justify-between items-center px-8 bg-transparent h-24 ">
+    <nav className="flex justify-between items-center px-2 md:px-8 bg-transparent h-24">
       <Link href="/">
         <Image src="/serufo.png" alt="logo" width={250} height={10} />
       </Link>

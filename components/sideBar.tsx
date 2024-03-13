@@ -32,13 +32,13 @@ const Sidebar = () => {
       } h-screen px-4 py-8 bg-primary-foreground `}
     >
       <div
-        className="flex mx-4 space-x-2 mb-2 items-center"
+        className="flex  space-x-2 mb-2 items-center rounded-md px-2 py-2 hover:cursor-pointer hover:bg-accent"
         onClick={() => {
           setOpen(!open);
         }}
       >
         <FaBookOpen />
-        {open && <h1 className="text-xl">Admin Rental</h1>}
+        {open && <h1 className="text-xl">Admin Serufo</h1>}
       </div>
 
       <nav className="">

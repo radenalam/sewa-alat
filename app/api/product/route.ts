@@ -19,8 +19,31 @@ export async function POST(req: NextRequest) {
   });
 }
 
-export async function GET() {
-  const products = await prisma.product.findMany();
+// export async function GET() {
+//   const products = await prisma.product.findMany();
 
-  return NextResponse.json(products, { status: 200 });
+//   return NextResponse.json(products, { status: 200 });
+// }
+
+export async function GET(req: NextRequest) {
+  // Parsing URL untuk mendapatkan query parameters
+  const url = new URL(req.url);
+  let page = parseInt(url.searchParams.get("page") || "1", 10);
+  let limit = parseInt(url.searchParams.get("limit") || "10", 10);
+
+  // Menghitung jumlah skip
+  let skip = (page - 1) * limit;
+
+  // Query ke database dengan pagination
+  const products = await prisma.product.findMany({
+    take: limit,
+    skip: skip,
+  });
+
+  // Opsi: Hitung total produk untuk informasi pagination
+  const totalProducts = await prisma.product.count();
+  const totalPages = Math.ceil(totalProducts / limit);
+
+  // Mengembalikan produk dengan status 200
+  return NextResponse.json({ products, totalPages }, { status: 200 });
 }

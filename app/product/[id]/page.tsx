@@ -194,9 +194,9 @@ const ProductDetails = (
   return (
     <>
       <Navbar />
-      <div className="flex mx-14 my-5 bg-primary-foreground border-muted px-8 py-8 rounded-xl shadow-2xl">
+      <div className="flex-1 flex flex-col md:flex-row md:mx-14 md:my-5 bg-primary-foreground border-muted px-8 py-8 rounded-xl shadow-2xl">
         {/* Kiri */}
-        <div className="w-1/2 flex flex-col">
+        <div className="flex flex-col">
           {product && (
             <div className=" h-full w-full px-8">
               <p className="text-center px-3 py-3 text-3xl font-semibold">
@@ -222,7 +222,7 @@ const ProductDetails = (
           )}
         </div>
         {/* Kanan */}
-        <div className="bg-secondary rounded-md w-1/2 flex flex-col px-8 py-4 gap-3">
+        <div className="bg-secondary rounded-md flex flex-col px-8 py-4 gap-3">
           <p className="font-extrabold text-center mt-4 mb-2 text-2xl bg-secondary items-center rounded-md py-2">
             Pinjam Barang
           </p>

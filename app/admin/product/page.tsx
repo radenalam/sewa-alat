@@ -26,10 +26,13 @@ const productPage = () => {
     axios
       .get("/api/product")
       .then((response) => {
-        if (Array.isArray(response.data)) {
-          setProduct(response.data);
+        if (Array.isArray(response.data.products)) {
+          setProduct(response.data.products);
         } else {
-          console.error("Invalid response data format:", response.data);
+          console.error(
+            "Invalid response data format:",
+            response.data.products
+          );
         }
       })
       .catch((error) => console.error("Error fetching projects:", error));

@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Button } from "./ui/button";
 
 export default function Component() {
   const { data: session } = useSession();
@@ -6,8 +7,10 @@ export default function Component() {
   if (session) {
     return (
       <>
-        <p>Selamat datang, {session.user?.email}</p>
-        <button onClick={() => signOut()}>Keluar</button>
+        <p className="rounded-md">{session.user?.email}</p>
+        <Button className="rounded-md" onClick={() => signOut()}>
+          Keluar
+        </Button>
       </>
     );
   }

@@ -13,7 +13,7 @@ const ProductCard = ({ id, name, price, description, image }: ProductProps) => {
             <img
               src={image as string}
               alt={image as string}
-              className="backdrop-brightness-50 inner-image rounded-sm"
+              className="backdrop-brightness-95 shadow-lg inner-image rounded-sm"
               width={200}
               height={200}
             />
