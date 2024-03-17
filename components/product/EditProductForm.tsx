@@ -17,6 +17,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
+import Image from "next/image";
 
 type EditProductFormProps = {
   product?: ProductProps;
@@ -63,7 +64,7 @@ const EditProduct = ({ product }: EditProductFormProps) => {
             defaultValue={product?.price}
             {...register("price", { required: "Price is required" })}
           />
-          <img
+          <Image
             src={
               product?.image
                 ? `/uploads/${product.image}`

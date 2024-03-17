@@ -5,6 +5,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
 import { dataURItoFile } from "@/app/helper";
+import Image from "next/image";
 
 const ImageUploader = ({ uploadSelesai }: any) => {
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -84,7 +85,7 @@ const ImageUploader = ({ uploadSelesai }: any) => {
       {/* Hasil Crop */}
       <div hidden={croppedImageHide} className=" my-2 m-auto">
         <p>Cropped Image</p>
-        <img
+        <Image
           src={croppedImage}
           alt="cropped image"
           width={250}

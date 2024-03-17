@@ -27,6 +27,7 @@ import { DateRange } from "react-day-picker";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { toast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "next/image";
 
 const ProductDetails = (
   { params }: { params: { id: string } },
@@ -105,7 +106,7 @@ const ProductDetails = (
         console.error("Error fetching data:", error);
         // Handle error, misalnya menetapkan state untuk menampilkan pesan kesalahan ke pengguna
       });
-  }, []);
+  }, [params.id]);
 
   const isDateDisabled = (date: Date) => {
     // Menonaktifkan hari sebelum hari ini
@@ -202,7 +203,7 @@ const ProductDetails = (
               <p className="text-center px-3 py-3 text-3xl font-semibold">
                 {product.name}
               </p>
-              <img
+              <Image
                 src={
                   product.image
                     ? `/uploads/${product.image}`

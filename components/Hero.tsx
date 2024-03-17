@@ -1,6 +1,7 @@
 // components/HeroSection.js
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const HeroSection = () => {
   return (
@@ -17,10 +18,12 @@ const HeroSection = () => {
           <Button>Explore</Button>
         </div>
         <div className="flex items-center px-8 mt-4 md:px-2 ">
-          <img
+          <Image
             src="/camera.png"
             alt="hero-image"
             className="max-h-full max-w-full"
+            width={400}
+            height={400}
           />
         </div>
       </div>

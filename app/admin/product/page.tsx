@@ -19,7 +19,7 @@ import DeleteProductForm from "@/components/product/DeleteProductForm";
 import { ProductProps } from "@/types/index";
 import Image from "next/image";
 
-const productPage = () => {
+const ProductPage = () => {
   const [product, setProduct] = useState<ProductProps[]>([]);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const productPage = () => {
                 </TableCell>
 
                 <TableCell align="center">
-                  <img
+                  <Image
                     src={
                       product.image
                         ? `/uploads/${product.image}`
@@ -105,4 +105,4 @@ const productPage = () => {
   );
 };
 
-export default productPage;
+export default ProductPage;

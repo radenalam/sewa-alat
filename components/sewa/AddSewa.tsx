@@ -138,7 +138,7 @@ const AddSewa = () => {
     if (selectedAnggota) {
       setValue("anggotaId", selectedAnggota.id);
     }
-  }, [selectedProduct, anggota, setValue]);
+  }, [selectedProduct, selectedAnggota, setValue]);
 
   useEffect(() => {
     axios

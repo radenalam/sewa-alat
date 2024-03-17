@@ -45,6 +45,7 @@ const Home = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
               {product.map((product, i) => (
                 <ProductCard
+                  key={i}
                   id={product.id}
                   name={product.name}
                   price={product.price}

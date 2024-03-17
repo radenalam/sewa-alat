@@ -3,6 +3,7 @@
 import { ProductProps } from "@/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 const ProductCard = ({ id, name, price, description, image }: ProductProps) => {
   return (
@@ -10,7 +11,7 @@ const ProductCard = ({ id, name, price, description, image }: ProductProps) => {
       <div className="mx-5 my-5 flex flex-col justify-between h-full pb-10">
         <div>
           <div className="square">
-            <img
+            <Image
               src={image as string}
               alt={image as string}
               className="backdrop-brightness-95 shadow-lg inner-image rounded-sm"

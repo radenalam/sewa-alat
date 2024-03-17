@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
 
-type EditAnggotaProps = {
+export type EditAnggotaProps = {
   anggota?: AnggotaProps;
 };
 

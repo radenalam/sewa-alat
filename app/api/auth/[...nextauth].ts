@@ -1,7 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/prisma/client";
-import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -32,7 +31,6 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
-          // if (user && bcrypt.compareSync(credentials.password, user.password)) { // password hashed
           if (user && credentials.password === user.password) {
             // Return user data if valid
             return {
