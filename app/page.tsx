@@ -10,16 +10,26 @@ import { ProductProps } from "@/types";
 import axios from "axios";
 import Loading from "./loading";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 const Home = () => {
+  // Di awal komponen
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  // Fungsi untuk mengganti halaman
+  const changePage = (newPage: any) => {
+    setCurrentPage(newPage);
+  };
   const [product, setProduct] = useState<ProductProps[]>([]);
   useEffect(() => {
     axios
-      .get("/api/product?page=1&limit=10")
+      .get(`/api/product?page=${currentPage}&limit=8`)
       .then((response) => {
         console.log(response.data);
         if (Array.isArray(response.data.products)) {
           setProduct(response.data.products);
+          setTotalPages(response.data.totalPages); // Menyimpan total halaman
         } else {
           console.error(
             "Invalid response data format:",
@@ -27,8 +37,8 @@ const Home = () => {
           );
         }
       })
-      .catch((error) => console.error("Error fetching projects:", error));
-  }, []);
+      .catch((error) => console.error("Error fetching products:", error));
+  }, [currentPage]); // Tambahkan currentPage sebagai dependency
   return (
     <>
       <NavBar />
@@ -57,6 +67,21 @@ const Home = () => {
                   }
                 />
               ))}
+            </div>
+            <div className="pt-4 flex items-center space-x-3 justify-center">
+              {currentPage > 1 && (
+                <Button onClick={() => changePage(currentPage - 1)}>
+                  Sebelumnya
+                </Button>
+              )}
+              <span>
+                Halaman {currentPage} dari {totalPages}
+              </span>
+              {currentPage < totalPages && (
+                <Button onClick={() => changePage(currentPage + 1)}>
+                  Berikutnya
+                </Button>
+              )}
             </div>
           </div>
         </div>
