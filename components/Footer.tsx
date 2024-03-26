@@ -11,7 +11,7 @@ const Footer = () => {
         <Link href="/" className="ml-auto">
           Privacy & Policy
         </Link>
-        <Link href="/">Terms & Condition</Link>
+        <Link href="/syarat-ketentuan">Terms & Condition</Link>
       </div>
     </div>
   );
