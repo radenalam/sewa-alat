@@ -16,10 +16,31 @@ const Home = () => {
   // Di awal komponen
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
+  const [searchQuery, setSearchQuery] = useState("");
   // Fungsi untuk mengganti halaman
   const changePage = (newPage: any) => {
     setCurrentPage(newPage);
+    setSearchQuery(""); // Reset nilai pencarian saat berpindah halaman
+  };
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+  const handleSearch = () => {
+    axios
+      .get(`/api/product?page=${currentPage}&limit=8&search=${searchQuery}`)
+      .then((response) => {
+        console.log(response.data);
+        if (Array.isArray(response.data.products)) {
+          setProduct(response.data.products);
+          setTotalPages(response.data.totalPages); // Menyimpan total halaman
+        } else {
+          console.error(
+            "Invalid response data format:",
+            response.data.products
+          );
+        }
+      })
+      .catch((error) => console.error("Error fetching products:", error));
   };
   const [product, setProduct] = useState<ProductProps[]>([]);
   useEffect(() => {
@@ -49,8 +70,13 @@ const Home = () => {
             <h1 className="pt-20 text-3xl font-bold">Kamera Katalog</h1>
             <p className="pt-1">Explore out camera you might like</p>
 
-            <div className=" py-10 max-w-sm">
-              <Input placeholder="Kamera" />
+            <div className=" py-10 max-w-sm flex flex-row space-x-2">
+              <Input
+                placeholder="Kamera"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              <Button onClick={handleSearch}>Search</Button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
               {product.map((product, i) => (
