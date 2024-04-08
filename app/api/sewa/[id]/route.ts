@@ -24,3 +24,21 @@ export async function GET(
     );
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: Number } }
+) {
+  try {
+    const deletedSewa = await prisma.sewa.delete({
+      where: { id: Number(params.id) },
+    });
+
+    if (!deletedSewa) {
+      return NextResponse.json({ error: "Sewa not found" }, { status: 404 });
+    }
+    return NextResponse.json(deletedSewa, { status: 201 });
+  } catch (error) {
+    console.error("Error deleting Product:", error);
+  }
+}

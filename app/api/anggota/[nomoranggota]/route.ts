@@ -11,14 +11,19 @@ export async function GET(
     });
 
     if (!anggota) {
-      return NextResponse.json({ error: "Anggota not found" }, { status: 404 });
+      // Instead of just returning a 404 status, return a JSON object with a clear indication
+      return NextResponse.json(
+        { error: true, message: "Anggota not found" },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json({ anggota });
+    // Return the found anggota with a success status code (optional)
+    return NextResponse.json({ anggota }, { status: 200 });
   } catch (error) {
     console.error("Error fetching anggota details:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: true, message: "Internal Server Error" },
       { status: 500 }
     );
   }

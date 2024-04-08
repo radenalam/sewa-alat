@@ -14,6 +14,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddSewa from "@/components/sewa/AddSewa";
 import { Button } from "@/components/ui/button";
+import DeleteSewaForm from "@/components/sewa/DeleteSewaForm";
 
 const PengambilanPage = () => {
   const [sewa, setSewa] = useState<SewaProps[]>([]);
@@ -79,7 +80,11 @@ const PengambilanPage = () => {
                 <TableCell>{sewa?.tgl_selesai.toString()}</TableCell>
                 <TableCell>{sewa?.total_harga}</TableCell>
                 <TableCell>{sewa?.createdAt.toString()}</TableCell>
-                <TableCell>ACTION</TableCell>
+                <TableCell>
+                  <div className="flex flex-row space-x-2">
+                    <DeleteSewaForm sewa={sewa} />
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

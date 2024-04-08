@@ -33,7 +33,7 @@ const Navbar = () => {
           <MoonIcon className="absolute h-6 w-6 rotate-0 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </Button>
         <a href="/admin">
-          <Button>Admin</Button>
+          <Button>Menu</Button>
         </a>
       </div>
     </nav>

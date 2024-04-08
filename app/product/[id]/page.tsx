@@ -126,17 +126,31 @@ const ProductDetails = (
   }, [params.id]); // Include params.id as a dependency
 
   const cekAnggota = () => {
+    // Initialize toast
     const nomorAnggotaValue = getValuesAnggota("nomorAnggota");
 
-    axios.get(`/api/anggota/${nomorAnggotaValue}`).then((res) => {
-      if (res.data.anggota) {
-        setAnggota(res.data.anggota);
-        console.log(anggota);
-        setBisaPesan(true);
-      } else {
-        setBisaPesan(false);
-      }
-    });
+    axios
+      .get(`/api/anggota/${nomorAnggotaValue}`)
+      .then((res) => {
+        if (res.data.anggota) {
+          setAnggota(res.data.anggota);
+          console.log(res.data.anggota);
+          setBisaPesan(true);
+        } else {
+          // Check if the error key exists and is true, then display the toast
+          setBisaPesan(false);
+        }
+      })
+      .catch((error) => {
+        // Handle network or other axios-specific errors
+        console.error("Error fetching data:", error);
+        toast({
+          title: `Anggota Tidak Ditemukan`,
+          description: `Nomor Anggota tidak ditemukan.`,
+
+          duration: 5000,
+        });
+      });
   };
 
   const handlePesanAnggota = () => {
