@@ -9,9 +9,9 @@ const Footer = () => {
 
       <div className="flex space-x-4">
         <Link href="/" className="ml-auto">
-          Privacy & Policy
+          About
         </Link>
-        <Link href="/syarat-ketentuan">Terms & Condition</Link>
+        <Link href="/syarat-ketentuan">Syarat dan Ketentuan</Link>
       </div>
     </div>
   );
