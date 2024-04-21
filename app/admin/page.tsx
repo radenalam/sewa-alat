@@ -41,7 +41,7 @@ const AdminDashboardPage = () => {
 
   return (
     <div className="flex mx-5 my-5 border bg-secondary h-auto shadow-md rounded-lg p-5">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-5 w-full">
         <Card title="Pesanan Baru" value={dashboardData.pinjamanBaru} />
         <Card title="Sedang dipinjam" value={dashboardData.sedangDipinjam} />
         <Card

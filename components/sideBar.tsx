@@ -23,7 +23,7 @@ const Sidebar = () => {
     { label: "Barang", href: "/admin/product", icon: <FaProjectDiagram /> },
     { label: "Daftar Sewa", href: "/admin/sewa", icon: <FaTasks /> },
     { label: "Daftar Anggota", href: "/admin/anggota", icon: <FaUsers /> },
-    { label: "Home", href: "/", icon: <FaUsers /> },
+    //{ label: "Home", href: "/", icon: <FaUsers /> },
   ];
   return (
     <div
