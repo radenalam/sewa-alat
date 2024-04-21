@@ -163,7 +163,7 @@ const ProductDetails = (
       nonAnggotaId: null,
       tgl_mulai: moment(date?.from).utcOffset(0, true).format(),
       tgl_selesai: moment(date?.to).utcOffset(0, true).format(),
-      total_harga: 0,
+      total_harga: product?.price,
     };
 
     SimpanSewa(anggotaSewa);
@@ -237,7 +237,7 @@ const ProductDetails = (
           )}
         </div>
         {/* Kanan */}
-        <div className="bg-secondary rounded-md flex flex-col px-8 py-4 gap-3">
+        <div className="bg-secondary w-1/2 rounded-md flex flex-col px-8 py-4 gap-3">
           <p className="font-extrabold text-center mt-4 mb-2 text-2xl bg-secondary items-center rounded-md py-2">
             Pinjam Barang
           </p>
@@ -374,13 +374,14 @@ const ProductDetails = (
             <p>Harga</p>
             <Input
               disabled
-              value={
-                isAnggota
-                  ? "0"
-                  : totalPrice
-                  ? `Rp${totalPrice.toLocaleString("id-ID")}/total`
-                  : ""
-              }
+              // value={
+              //   isAnggota
+              //     ? "0"
+              //     : totalPrice
+              //     ? `Rp${totalPrice.toLocaleString("id-ID")}/total`
+              //     : ""
+              // }
+              value={totalPrice}
               className="border-2-accent w-2/3"
             />
           </div>
