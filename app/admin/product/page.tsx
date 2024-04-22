@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import EditProductForm from "@/components/product/EditProductForm";
@@ -20,23 +20,29 @@ import { ProductProps } from "@/types/index";
 import Image from "next/image";
 
 const ProductPage = () => {
-  const [product, setProduct] = useState<ProductProps[]>([]);
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
+    fetchProducts(currentPage);
+  }, [currentPage]);
+
+  const fetchProducts = (page: number) => {
     axios
-      .get("/api/product")
+      .get(`/api/product?page=${page}&limit=10`)
       .then((response) => {
-        if (Array.isArray(response.data.products)) {
-          setProduct(response.data.products);
+        if (response.data && Array.isArray(response.data.products)) {
+          setProducts(response.data.products);
+          setTotalPages(response.data.totalPages);
         } else {
-          console.error(
-            "Invalid response data format:",
-            response.data.products
-          );
+          console.error("Invalid response data format:", response.data);
         }
       })
-      .catch((error) => console.error("Error fetching projects:", error));
-  }, []);
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  };
 
   return (
     <div className="flex flex-col">
@@ -56,7 +62,7 @@ const ProductPage = () => {
               <TableHead className="text-secondary-foreground">
                 Deskripsi
               </TableHead>
-              <TableHead className="text-secondary-foregroun text-end">
+              <TableHead className="text-secondary-foreground text-end">
                 Harga
               </TableHead>
               <TableHead className="text-secondary-foreground text-center">
@@ -68,7 +74,7 @@ const ProductPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {product.map((product, i) => (
+            {products.map((product, i) => (
               <TableRow key={i}>
                 <TableCell className="text-center">{product.id}</TableCell>
                 <TableCell>{product.name}</TableCell>
@@ -76,7 +82,6 @@ const ProductPage = () => {
                 <TableCell className="text-end">
                   {product.price.toLocaleString("id-ID")}
                 </TableCell>
-
                 <TableCell align="center">
                   <Image
                     src={
@@ -89,7 +94,6 @@ const ProductPage = () => {
                     height={50}
                   />
                 </TableCell>
-
                 <TableCell>
                   <div className="flex flex-row space-x-2">
                     <EditProductForm product={product} />
@@ -100,6 +104,23 @@ const ProductPage = () => {
             ))}
           </TableBody>
         </Table>
+        <div className="py-4 flex justify-center">
+          <Button
+            disabled={currentPage <= 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
+            Previous
+          </Button>
+          <span className="mx-4">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            disabled={currentPage >= totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
